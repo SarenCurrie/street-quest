@@ -50,9 +50,11 @@
 			});
 
 			navigator.geolocation.watchPosition(function(position) {
-				marker.setPosition({lat: position.coords.latitude, lng: position.coords.longitude}});
+				var location = {lat: position.coords.latitude, lng: position.coords.longitude};
+				marker.setPosition(location);
 				circle.setRadius(position.coords.accuracy);
-				circle.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+				circle.setCenter(location);
+				map.setCenter(location);
 			});
 		});
 	}
