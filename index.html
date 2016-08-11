@@ -52,7 +52,7 @@
 			navigator.geolocation.watchPosition(function(position) {
 				marker.setPosition({lat: position.coords.latitude, lng: position.coords.longitude}});
 				circle.setRadius(position.coords.accuracy);
-				circle.setCenter({lat: position.coords.latitude, lng: position.coords.longitude})
+				circle.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
 			});
 		});
 	}
