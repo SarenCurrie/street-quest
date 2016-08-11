@@ -33,19 +33,7 @@
 				zoom: 17
 			});
 
-			var circle;
-			var marker;
-
-			navigator.geolocation.watchPosition(function(position) {
-				marker.setMap(null);
-				marker = new google.maps.Marker({
-					position: {lat: position.coords.latitude, lng: position.coords.longitude},
-					map: map,
-					title: 'Hello World!'
-				});
-
-				circle.setMap(null);
-				circle = new google.maps.Circle({
+			var circle = new google.maps.Circle({
 					strokeColor: '#0055EE',
 					strokeOpacity: 0.7,
 					strokeWeight: 2,
@@ -54,7 +42,17 @@
 					map: map,
 					center: {lat: position.coords.latitude, lng: position.coords.longitude},
 					radius: position.coords.accuracy
-				});
+			});
+			var marker = new google.maps.Marker({
+					position: {lat: position.coords.latitude, lng: position.coords.longitude},
+					map: map,
+					title: 'Hello World!'
+			});
+
+			navigator.geolocation.watchPosition(function(position) {
+				marker.setPosition({lat: position.coords.latitude, lng: position.coords.longitude}});
+				circle.setRadius(position.coords.accuracy);
+				circle.setCenter({lat: position.coords.latitude, lng: position.coords.longitude})
 			});
 		});
 	}
