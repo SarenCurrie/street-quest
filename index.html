@@ -49,17 +49,51 @@
 					title: 'Hello World!'
 			});
 
+			var questpoint = new google.maps.Marker({
+					position: {lat: position.coords.latitude + 0.0003, lng: position.coords.longitude},
+					map: map,
+					title: 'Gower Quest!'
+			});
+
+			var questpoint2 = new google.maps.Marker({
+					position: {lat: position.coords.latitude + 0.003, lng: position.coords.longitude},
+					map: map,
+					title: 'Gower Quest!'
+			});
+
+			
+			questpoint.addListener('click', function(){
+				questInRange(circle,questpoint);
+			});
+			questpoint2.addListener('click', function(){
+				questInRange(circle,questpoint2);
+			});
+			//questpoint2.addListener('click', questInRange(circle,questpoint2));
+
 			navigator.geolocation.watchPosition(function(position) {
 				var location = {lat: position.coords.latitude, lng: position.coords.longitude};
 				marker.setPosition(location);
-				circle.setRadius(position.coords.accuracy);
+				// circle.setRadius(position.coords.accuracy);
 				circle.setCenter(location);
 				map.setCenter(location);
 			});
 		});
 	}
+
+
+	function questInRange(circle,questpoint) {
+		google.maps.Circle.prototype.contains = function(latLng) {
+			return this.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
+		}
+
+  		if ( ! circle.contains(questpoint.getPosition())){
+  			console.log("You're too far away to interact with that questpoint.")
+  		} else {
+  			console.log("This is some quest dialogue! Can you help me write a better one?")
+  		}
+	}
 	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmURcC0_8TFTJ4RTGSWFskNeF4XOMzB0U&callback=initMap"
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmURcC0_8TFTJ4RTGSWFskNeF4XOMzB0U&libraries=geometry&callback=initMap"
 	async defer></script>
 </body>
 </html>
