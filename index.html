@@ -17,6 +17,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
+	<script src="questManage.js"></script>
 	<div id="map"></div>
 	<script>
 	var map;
@@ -34,20 +35,20 @@
 			});
 
 			var circle = new google.maps.Circle({
-					strokeColor: '#0055EE',
-					strokeOpacity: 0.7,
-					strokeWeight: 2,
-					fillColor: '#0055EE',
-					fillOpacity: 0.25,
-					map: map,
-					center: {lat: position.coords.latitude, lng: position.coords.longitude},
-					radius: position.coords.accuracy
+				strokeColor: '#0055EE',
+				strokeOpacity: 0.7,
+				strokeWeight: 2,
+				fillColor: '#0055EE',
+				fillOpacity: 0.25,
+				map: map,
+				center: {lat: position.coords.latitude, lng: position.coords.longitude},
+				radius: position.coords.accuracy
 			});
 			var marker = new google.maps.Marker({
-					position: {lat: position.coords.latitude, lng: position.coords.longitude},
-					map: map,
-					title: 'Hello World!',
-					draggable: true
+				position: {lat: position.coords.latitude, lng: position.coords.longitude},
+				map: map,
+				title: 'Hello World!',
+				draggable: true
 			});
 
 			marker.addListener('dragend',function(e){
@@ -58,51 +59,92 @@
 				circle.setCenter(location);
 			});
 
+			var questpoint0 = new google.maps.Marker({
+				position: {lat : -36.84749640093485 , lng : 174.76286748815653},
+				map: map,
+				title: 'uni!'
+			});
+
 			var questpoint = new google.maps.Marker({
-					position: {lat: position.coords.latitude + 0.0003, lng: position.coords.longitude},
-					map: map,
-					title: 'Gower Quest!'
+				position: {lat : -36.85052492720226 , lng : 174.76793015767214},
+				map: map,
+				title: 'water!'
 			});
 
 			var questpoint2 = new google.maps.Marker({
-					position: {lat: position.coords.latitude + 0.003, lng: position.coords.longitude},
-					map: map,
-					title: 'Gower Quest!'
+				position: {lat : -36.849797959228646 , lng : 174.76853231359598},
+				map: map,
+				title: 'logs!'
 			});
 
-			
-			questpoint.addListener('click', function(){
-				questInRange(circle,questpoint);
+			function loadJSON(callback) {
+
+				var xobj = new XMLHttpRequest();
+				xobj.overrideMimeType("application/json");
+				xobj.open('GET', 'quests.json', true); // Replace 'my_data' with the path to your file
+				xobj.onreadystatechange = function () {
+					if (xobj.readyState == 4 && xobj.status == "200") {
+						// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+						callback(xobj.responseText);
+					}
+				};
+				xobj.send(null);
+			}
+
+			loadJSON(function(response) {
+				// Parse JSON string into object
+				var questLog = JSON.parse(response);
+				console.log(questLog);
+				doTheNextShit(questLog);
 			});
-			questpoint2.addListener('click', function(){
-				questInRange(circle,questpoint2);
-			});
+
+			var doTheNextShit = function (questLog) {
+				console.log(questLog);
+				questpoint0.addListener('click', function(){
+					if (questInRange(circle,questpoint0)){
+					checkPosition(questLog, questpoint0.getPosition());
+				}
+				});
+				questpoint.addListener('click', function(){
+					if (questInRange(circle,questpoint)){
+					checkPosition(questLog, questpoint.getPosition());
+				}
+				});
+				questpoint2.addListener('click', function(){
+					if (questInRange(circle,questpoint2)){
+					checkPosition(questLog, questpoint2.getPosition());
+				}
+				});
+			}
+
 			//questpoint2.addListener('click', questInRange(circle,questpoint2));
 
-/*			navigator.geolocation.watchPosition(function(position) {
-				var location = {lat: position.coords.latitude, lng: position.coords.longitude};
-				marker.setPosition(location);
-				// circle.setRadius(position.coords.accuracy);
-				circle.setCenter(location);
-				map.setCenter(location);
-			});*/
-		});
+			/*			navigator.geolocation.watchPosition(function(position) {
+			var location = {lat: position.coords.latitude, lng: position.coords.longitude};
+			marker.setPosition(location);
+			// circle.setRadius(position.coords.accuracy);
+			circle.setCenter(location);
+			map.setCenter(location);
+		});*/
+	});
+}
+
+
+function questInRange(circle,questpoint) {
+	google.maps.Circle.prototype.contains = function(latLng) {
+		return this.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
 	}
 
-
-	function questInRange(circle,questpoint) {
-		google.maps.Circle.prototype.contains = function(latLng) {
-			return this.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
-		}
-
-  		if ( ! circle.contains(questpoint.getPosition())){
-  			console.log("You're too far away to interact with that questpoint.")
-  		} else {
-  			console.log("This is some quest dialogue! Can you help me write a better one?")
-  		}
+	if ( ! circle.contains(questpoint.getPosition())){
+		console.log("You're too far away to interact with that questpoint.");
+		return false;
+	} else {
+		console.log("Quest in range!");
+		return true;
 	}
-	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmURcC0_8TFTJ4RTGSWFskNeF4XOMzB0U&libraries=geometry&callback=initMap"
-	async defer></script>
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmURcC0_8TFTJ4RTGSWFskNeF4XOMzB0U&libraries=geometry&callback=initMap"
+async defer></script>
 </body>
 </html>
