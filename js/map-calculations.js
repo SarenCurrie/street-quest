@@ -21,3 +21,25 @@ function addDistanceToPosition(position, north, east) {
 	var lon = position.lng + (toDegrees(east / EARTH_RADIUS_METERS) / Math.cos(toRadians(position.lat)));
 	return {"lat": lat, "lng": lon}
 }
+
+/**
+ * Adjusts a position to be accessible by foot.
+ * It uses a reverse geolocation lookup to find the closest address to the given location.
+ * This should usually be enough to get close enough to the position by foot.
+ * @param position An object containing 'lat' and 'lng' coordinates.
+ * @param geocoder A Google Maps geocoder.
+ * @param callback Callback to receive results.
+ */
+function adjustPosition(position, geocoder, callback) {
+	geocoder.geocode({'location': position}, function(results, status) {
+		if (status === 'OK') {
+			if (results[0]) {
+				callback(null, results[0].geometry.location);
+			} else {
+				callback('no results', null);
+			}
+		} else {
+			callback(status, null);
+		}
+	});
+}
