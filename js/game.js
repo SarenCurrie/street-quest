@@ -97,6 +97,22 @@ function initMap() {
 			ui.init();
 		}
 
+		// Spawns two markers in +-500 meters (east and north) from the current location.
+		// The randomly chosen point is labeled 'R'.
+		// The adjusted point (that avoids waters etc., but is close to 'R') is labeled 'A'.
+		var geocoder = new google.maps.Geocoder;
+		var dx = ((Math.random() * 2) - 1) * 500;
+		var dy = ((Math.random() * 2) - 1) * 500;
+		var pos = addDistanceToPosition({lat: position.coords.latitude, lng: position.coords.longitude}, dx, dy);
+		spawnItem(pos, "R");
+		adjustPosition(pos, geocoder, function(err, result) {
+			if (err) {
+				console.log(err);
+				return;
+			}
+			spawnItem(result, "A");
+		});
+
 		//questpoint2.addListener('click', questInRange(circle,questpoint2));
 
 		/*			navigator.geolocation.watchPosition(function(position) {
@@ -109,6 +125,13 @@ function initMap() {
 });
 }
 
+function spawnItem(position, label) {
+	new google.maps.Marker({
+			map: map,
+			position: position,
+			label: label
+		});
+}
 
 function questInRange(circle,questpoint) {
 	google.maps.Circle.prototype.contains = function(latLng) {
