@@ -4,20 +4,44 @@
 	<title>Simple Map</title>
 	<meta name="viewport" content="initial-scale=1.0">
 	<meta charset="utf-8">
-	<style>
-	html, body {
-		height: 100%;
-		margin: 0;
-		padding: 0;
-	}
-	#map {
-		height: 100%;
-	}
-	</style>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css" integrity="sha256-04c86695a339c6baa3417cf285fbf62e742dab614f3e55da585b5648e6db84da" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="css/main.css">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="js/ui.js" charset="utf-8"></script>
+	<script src="js/map-calculations.js"></script>
+	<script src="questManage.js"></script>
 </head>
 <body>
-	<script src="questManage.js"></script>
+	<div id="menu_parent">
+		<div id="menu_container">
+			<a href="#" id="menu_button" class="btn btn-primary">Menu</a>
+			<ul id="menu" class="list-group" style="display: none">
+				<li id="close_menu" class="btn btn-secondary list-group-item" class="active"><a href="#">Close</a></li>
+			  <li id="show_dialog" class="btn btn-secondary list-group-item"><a href="#">Example Dialog</a></li>
+			  <li class="btn btn-secondary list-group-item"><a href="#">Messages</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="dialog_container">
+		<div id="dialog" style="display: none">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+					<h3 id="dialog_speaker" class="panel-title">Placeholder</h3>
+				</div>
+				<div id="dialog_text" class="panel-body">
+					Placeholder text
+				</div>
+		  </div>
+		</div>
+	</div>
 	<div id="map"></div>
 	<script>
 	var map;
@@ -102,19 +126,21 @@
 				console.log(questLog);
 				questpoint0.addListener('click', function(){
 					if (questInRange(circle,questpoint0)){
-					checkPosition(questLog, questpoint0.getPosition());
-				}
+						checkPosition(questLog, questpoint0.getPosition());
+					}
 				});
 				questpoint.addListener('click', function(){
 					if (questInRange(circle,questpoint)){
-					checkPosition(questLog, questpoint.getPosition());
-				}
+						checkPosition(questLog, questpoint.getPosition());
+					}
 				});
-																					questpoint2.addListener('click', function(){
+				questpoint2.addListener('click', function(){
 					if (questInRange(circle,questpoint2)){
-					checkPosition(questLog, questpoint2.getPosition());
-				}
+						checkPosition(questLog, questpoint2.getPosition());
+					}
 				});
+
+				ui.init();
 			}
 
 			//questpoint2.addListener('click', questInRange(circle,questpoint2));
