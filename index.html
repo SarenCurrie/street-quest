@@ -110,7 +110,7 @@
 					checkPosition(questLog, questpoint.getPosition());
 				}
 				});
-				questpoint2.addListener('click', function(){
+																					questpoint2.addListener('click', function(){
 					if (questInRange(circle,questpoint2)){
 					checkPosition(questLog, questpoint2.getPosition());
 				}
@@ -136,17 +136,11 @@ function questInRange(circle,questpoint) {
 	}
 
 	if ( ! circle.contains(questpoint.getPosition())){
-<<<<<<< HEAD
 		console.log("You're too far away to interact with that questpoint.");
 		return false;
 	} else {
 		console.log("Quest in range!");
 		return true;
-=======
-		console.log("You're too far away to interact with that questpoint.")
-	} else {
-		console.log("This is some quest dialogue! Can you help me write a better one?")
->>>>>>> a5854a6e91f628c420812c9470dbc9bc54fdf163
 	}
 }
 </script>
