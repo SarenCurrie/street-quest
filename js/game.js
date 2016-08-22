@@ -40,19 +40,22 @@ function initMap() {
 		var questpoint0 = new google.maps.Marker({
 			position: {lat : -36.84749640093485 , lng : 174.76286748815653},
 			map: map,
-			title: 'uni!'
+			title: 'uni!',
+			icon: './img/Sword.png'
 		});
 
 		var questpoint = new google.maps.Marker({
 			position: {lat : -36.85052492720226 , lng : 174.76793015767214},
 			map: map,
-			title: 'water!'
+			title: 'water!',
+			icon: './img/Gloves.png'
 		});
 
 		var questpoint2 = new google.maps.Marker({
 			position: {lat : -36.849797959228646 , lng : 174.76853231359598},
 			map: map,
-			title: 'logs!'
+			title: 'logs!',
+			icon: './img/Chest1Closed.png'
 		});
 
 		function loadJSON(callback) {
