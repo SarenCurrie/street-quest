@@ -4,22 +4,44 @@
 	"progress": 0,
 	"action": [{
 		"name": "visitmutiple",
-    "visited" : false,
-    "visitedno" : 0,
-		"dialog": "Hey man, I'm trying out for the uni rowing squad. I'm gonna need to build a raft to train on. Can you go grab me some logs? Oh, and some water too pls. I'm thirsty.",
-		"visited_dialog" : "Hurry! Registration closes soon!",
-		"completion_dialog": "Thanks bro! Here, take this! <hands over rune scimitar>",
-		"nextPoint": ["The water","The logs"]
+		"npcName": "Deen",
+		"visited" : false,
+		"visitedno" : 0,
+		"dialog": [
+			"Hey man, I'm trying out for the uni rowing squad. I'm gonna need to build a raft to train on. Can you go grab me some logs?",
+			"Oh, and some water too please. I'm thirsty."
+		],
+		"visited_dialog" : [
+			"Hurry! Registration closes soon!"
+		],
+		"completion_dialog": [
+			"Thanks bro! Here, take this! <hands over rune scimitar>"
+		],
+		"nextPoint": [
+			"The water",
+			"The logs"
+		]
 	},{
 		"name": "return",
+		"npcName": "",
     "visited" : false,
-		"dialog": "You fish a glass of dirty water out of the fountain using a homeless mans change cup. Oh well, better than Rio.",
-		"visited_dialog" : "I don't think you want a drink from here for yourself."
+		"dialog": [
+			"You fish a glass of dirty water out of the fountain using a homeless mans change cup.",
+			"Oh well, better than Rio."
+		],
+		"visited_dialog" : [
+			"I don't think you want a drink from here for yourself."
+		]
 	},{
 		"name": "return",
+		"npcName": "",
     "visited" : false,
-		"dialog": "You gather some twigs from a small pile on the ground. How convenient.",
-		"visited_dialog" : "There are no more twigs to collect."
+		"dialog": [
+			"You gather some twigs from a small pile on the ground. How convenient."
+		],
+		"visited_dialog" : [
+			"There are no more twigs to collect."
+		]
 	}],
 	"positions" : [{},{"lat" : -36.85052492720226 , "lng" : 174.76793015767214},{"lat" : -36.849797959228646 , "lng" : 174.76853231359598}]
 }]

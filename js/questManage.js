@@ -8,17 +8,17 @@ function checkPosition(questlog, positionToCheck) {
         if (quest.action[quest.progress].name === "visitmutiple"){
           if (i == quest.progress){
             if (quest.action[quest.progress].visitedno == quest.action[quest.progress].nextPoint.length){
-              console.log(quest.action[i].completion_dialog);
+              ui.makeDialog(quest.action[i].npcName, quest.action[i].completion_dialog);
             } else {
-              console.log(quest.action[i].visited_dialog);
+              ui.makeDialog(quest.action[i].npcName, quest.action[i].visited_dialog);
             }
           }
           else if (quest.action[i].visited == true){
-            console.log(quest.action[i].visited_dialog);
+            ui.makeDialog(quest.action[i].npcName, quest.action[i].visited_dialog);
           } else {
             quest.action[i].visited = true;
             quest.action[quest.progress].visitedno++;
-            console.log(quest.action[i].dialog);
+            ui.makeDialog(quest.action[i].npcName, quest.action[i].dialog);
           }
         }
         return;
@@ -28,11 +28,14 @@ function checkPosition(questlog, positionToCheck) {
   questlog.forEach(function(quest){
     if  (quest.active == false){
       quest.active = true;
-      console.log(quest.action[0].dialog);
-      quest.action[0].visited = true;
-      quest.positions[0] = {
-        lat:positionToCheck.lat(),
-        lng:positionToCheck.lng()};
+
+      ui.makeDialog(quest.action[0].npcName, quest.action[0].dialog, function () {
+        quest.action[0].visited = true;
+        quest.positions[0] = {
+          lat:positionToCheck.lat(),
+          lng:positionToCheck.lng()
+        };
+      });
     }
   });
   return;

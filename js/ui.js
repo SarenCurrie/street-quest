@@ -20,7 +20,7 @@ var ui = {
     $('#menu').hide();
   },
 
-  makeDialog: function (name, text) {
+  makeDialog: function (name, text, next) {
     $('#dialog').show();
     $('#dialog_speaker').text(name);
     $('#dialog_text').text(text[0]);
@@ -32,6 +32,7 @@ var ui = {
       } else {
         $('#dialog').hide()
         .off('click');
+        next && next();
       }
     });
   }
