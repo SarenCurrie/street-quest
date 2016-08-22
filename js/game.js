@@ -111,15 +111,15 @@ function initMap() {
 
 
 function questInRange(circle,questpoint) {
-google.maps.Circle.prototype.contains = function(latLng) {
-	return this.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
-}
+	google.maps.Circle.prototype.contains = function(latLng) {
+		return this.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
+	}
 
-if ( ! circle.contains(questpoint.getPosition())){
-	console.log("You're too far away to interact with that questpoint.");
-	return false;
-} else {
-	console.log("Quest in range!");
-	return true;
-}
+	if ( ! circle.contains(questpoint.getPosition())){
+		console.log("You're too far away to interact with that questpoint.");
+		return false;
+	} else {
+		console.log("Quest in range!");
+		return true;
+	}
 }
