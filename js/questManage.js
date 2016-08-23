@@ -58,5 +58,4 @@ function checkPosition(questlog, positionToCheck) {
       });
     }
   });
-  return;
 }
