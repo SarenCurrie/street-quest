@@ -1,4 +1,6 @@
 var map;
+var geocoder;
+var playerCircle;
 function initMap() {
 	if (!navigator.geolocation){
 		output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
@@ -11,8 +13,9 @@ function initMap() {
 			center: {lat: position.coords.latitude, lng: position.coords.longitude}, //Uni
 			zoom: 17
 		});
+		geocoder = new google.maps.Geocoder;
 
-		var circle = new google.maps.Circle({
+		playerCircle = new google.maps.Circle({
 			strokeColor: '#0055EE',
 			strokeOpacity: 0.7,
 			strokeWeight: 2,
@@ -34,28 +37,7 @@ function initMap() {
 				lat: e.latLng.lat(),
 				lng: e.latLng.lng()
 			}
-			circle.setCenter(location);
-		});
-
-		var questpoint0 = new google.maps.Marker({
-			position: {lat : -36.84749640093485 , lng : 174.76286748815653},
-			map: map,
-			title: 'uni!',
-			icon: './img/Sword.png'
-		});
-
-		var questpoint = new google.maps.Marker({
-			position: {lat : -36.85052492720226 , lng : 174.76793015767214},
-			map: map,
-			title: 'water!',
-			icon: './img/Gloves.png'
-		});
-
-		var questpoint2 = new google.maps.Marker({
-			position: {lat : -36.849797959228646 , lng : 174.76853231359598},
-			map: map,
-			title: 'logs!',
-			icon: './img/Chest1Closed.png'
+			playerCircle.setCenter(location);
 		});
 
 		function loadJSON(callback) {
@@ -75,65 +57,47 @@ function initMap() {
 		loadJSON(function(response) {
 			// Parse JSON string into object
 			var questLog = JSON.parse(response);
-			console.log(questLog);
-			doTheNextShit(questLog);
+			spawnQuestPoint({lat: position.coords.latitude, lng: position.coords.longitude}, 'Quest Start', questLog[0].action[0].icon, -100, 100, function(err, marker) {
+				if (err) {
+					console.log(err);
+					return;
+				}
+				marker.addListener('click', function() {
+					if (questInRange(playerCircle, marker)) {
+						checkPosition(questLog, marker.getPosition());
+					}
+				});
+			});
 		});
-
-		var doTheNextShit = function (questLog) {
-			console.log(questLog);
-			questpoint0.addListener('click', function(){
-				if (questInRange(circle,questpoint0)){
-					checkPosition(questLog, questpoint0.getPosition());
-				}
-			});
-			questpoint.addListener('click', function(){
-				if (questInRange(circle,questpoint)){
-					checkPosition(questLog, questpoint.getPosition());
-				}
-			});
-			questpoint2.addListener('click', function(){
-				if (questInRange(circle,questpoint2)){
-					checkPosition(questLog, questpoint2.getPosition());
-				}
-			});
-
-			ui.init();
-		}
-
-		// Spawns two markers in +-500 meters (east and north) from the current location.
-		// The randomly chosen point is labeled 'R'.
-		// The adjusted point (that avoids waters etc., but is close to 'R') is labeled 'A'.
-/*		var geocoder = new google.maps.Geocoder;
-		var dx = ((Math.random() * 2) - 1) * 500;
-		var dy = ((Math.random() * 2) - 1) * 500;
-		var pos = addDistanceToPosition({lat: position.coords.latitude, lng: position.coords.longitude}, dx, dy);
-		spawnItem(pos, "R");
-		adjustPosition(pos, geocoder, function(err, result) {
-			if (err) {
-				console.log(err);
-				return;
-			}
-			spawnItem(result, "A");
-		});*/
-
-		//questpoint2.addListener('click', questInRange(circle,questpoint2));
-
-		/*			navigator.geolocation.watchPosition(function(position) {
-		var location = {lat: position.coords.latitude, lng: position.coords.longitude};
-		marker.setPosition(location);
-		// circle.setRadius(position.coords.accuracy);
-		circle.setCenter(location);
-		map.setCenter(location);
-	});*/
-});
+	});
 }
 
-function spawnItem(position, label) {
-	new google.maps.Marker({
+/**
+ * Spawns a new quest point with an offset to a given position.
+ * The final marker will most likely be placed somewhere else, but close to the requested destination.
+ * You can get the final position from the marker that gets returned in the callback.
+ * @param position The position from where the offset is calculated.
+ * @param title The title to give to the marker.
+ * @param icon The icon to display as marker.
+ * @param dx Offset in North direction.
+ * @param dy Offset in South direction.
+ * @param callback Callback that gets executed after the position was calculated.
+ */
+function spawnQuestPoint(position, title, icon, dx, dy, callback) {
+	var pos = addDistanceToPosition(position, dx, dy);
+	adjustPosition(pos, geocoder, function(err, newPosition) {
+		if (err) {
+			callback(err, null);
+			return;
+		}
+		var marker = new google.maps.Marker({
 			map: map,
-			position: position,
-			label: label
+			position: newPosition,
+			title: title,
+			icon: icon
 		});
+		callback(null, marker);
+	});
 }
 
 function questInRange(circle,questpoint) {

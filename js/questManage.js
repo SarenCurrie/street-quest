@@ -31,10 +31,30 @@ function checkPosition(questlog, positionToCheck) {
 
       ui.makeDialog(quest.action[0].npcName, quest.action[0].dialog, function () {
         quest.action[0].visited = true;
-        quest.positions[0] = {
-          lat:positionToCheck.lat(),
-          lng:positionToCheck.lng()
-        };
+        var initialMarkerPos = {lat: positionToCheck.lat(), lng: positionToCheck.lng()};
+        quest.positions[0] = initialMarkerPos;
+        for (var i = 0; i < quest.action[0].nextPoint.length; i++) {
+          // We need another function to capture the 'i' parameter to not reference the same
+          // 'i' variable in each callback invocation.
+          var spawnQuestPointTmp = function (i) {
+            var icon = quest.action[i+1].icon;
+            var title = quest.action[0].nextPoint[i];
+            spawnQuestPoint(initialMarkerPos, title, icon, -100 + i * 200, 100 + i * 200, function (err, marker) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+              // Insert newly created markers into questlog.
+              quest.positions[i+1] = {lat: marker.getPosition().lat(), lng: marker.getPosition().lng()};
+              marker.addListener('click', function () {
+                if (questInRange(playerCircle, marker)) {
+                  checkPosition(questlog, marker.getPosition());
+                }
+              });
+            });
+          };
+          spawnQuestPointTmp(i);
+        }
       });
     }
   });

@@ -5,6 +5,7 @@
 	"action": [{
 		"name": "visitmutiple",
 		"npcName": "Deen",
+		"icon": "./img/Sword.png",
 		"visited" : false,
 		"visitedno" : 0,
 		"dialog": [
@@ -24,6 +25,7 @@
 	},{
 		"name": "return",
 		"npcName": "",
+		"icon": "./img/Gloves.png",
     "visited" : false,
 		"dialog": [
 			"You fish a glass of dirty water out of the fountain using a homeless mans change cup.",
@@ -35,6 +37,7 @@
 	},{
 		"name": "return",
 		"npcName": "",
+		"icon": "./img/Chest1Closed.png",
     "visited" : false,
 		"dialog": [
 			"You gather some twigs from a small pile on the ground. How convenient."
@@ -43,5 +46,5 @@
 			"There are no more twigs to collect."
 		]
 	}],
-	"positions" : [{},{"lat" : -36.85052492720226 , "lng" : 174.76793015767214},{"lat" : -36.849797959228646 , "lng" : 174.76853231359598}]
+	"positions" : [{},{},{}]
 }]
