@@ -109,7 +109,6 @@ function questInRange(circle,questpoint) {
 		console.log("You're too far away to interact with that questpoint.");
 		return false;
 	} else {
-		console.log("Quest in range!");
 		return true;
 	}
 }
