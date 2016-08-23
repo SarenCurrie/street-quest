@@ -25,7 +25,7 @@ function initMap() {
 		var marker = new google.maps.Marker({
 			position: {lat: position.coords.latitude, lng: position.coords.longitude},
 			map: map,
-			title: 'Hello World!',
+			title: 'Player',
 			draggable: true
 		});
 
