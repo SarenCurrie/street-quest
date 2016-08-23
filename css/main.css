@@ -1,37 +1,78 @@
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .gm-style-mtc {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 #map {
-  height: 100%;
+    height: 100%;
 }
 
 #menu_parent {
-  margin: 0;
-  width: 100%;
-  max-width: 500px;
-  position: fixed;
-  z-index: 1000;
+    position: absolute;
+    top: 1%;
+    left: 5%;
+    width: 90%;
+    z-index: 1000;
 }
 
 #menu_container {
-  width: 100%;
+    width: 100%;
 }
 
 #menu_container > * {
-  margin: 10px;
-  width: 100%;
+    width: 100%;
 }
 
 #dialog_container {
-  position: absolute;
-  bottom: 0;
-  z-index: 1001;
-  vertical-align: bottom;
+    position: absolute;
+    bottom: 0;
+    z-index: 1001;
+    vertical-align: bottom;
 }
+
+#inventory_container {
+    position: absolute;
+    left: 5%;
+    width: 90%;
+    top: 10%;
+    height: 80%;
+    z-index: 999;
+}
+
+#inventory {
+    height:100%;
+    text-align: center;
+}
+
+/*#inventory .panel-heading {
+    height: 10%;
+}*/
+
+#inventory .panel-body {
+    height: 80%;
+    overflow-y: scroll;
+}
+
+#inventory .panel-footer {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+/*    height: 10%;*/
+}
+
+#inventory li.list-group-item {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#inventory li.list-group-item .thumbnail {
+    float: left;
+    position: absolute;
+    top: 14%;
+}
+

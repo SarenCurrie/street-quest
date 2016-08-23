@@ -100,7 +100,7 @@ function initMap() {
 		// Spawns two markers in +-500 meters (east and north) from the current location.
 		// The randomly chosen point is labeled 'R'.
 		// The adjusted point (that avoids waters etc., but is close to 'R') is labeled 'A'.
-		var geocoder = new google.maps.Geocoder;
+/*		var geocoder = new google.maps.Geocoder;
 		var dx = ((Math.random() * 2) - 1) * 500;
 		var dy = ((Math.random() * 2) - 1) * 500;
 		var pos = addDistanceToPosition({lat: position.coords.latitude, lng: position.coords.longitude}, dx, dy);
@@ -111,7 +111,7 @@ function initMap() {
 				return;
 			}
 			spawnItem(result, "A");
-		});
+		});*/
 
 		//questpoint2.addListener('click', questInRange(circle,questpoint2));
 
