@@ -64,7 +64,7 @@ function initMap() {
 				}
 				marker.addListener('click', function() {
 					if (questInRange(playerCircle, marker)) {
-						checkPosition(questLog, marker.getPosition());
+						checkPosition(questLog, marker);
 					}
 				});
 			});
