@@ -69,6 +69,7 @@ function initMap() {
 				});
 			});
 		});
+		ui.init();
 	});
 }
 
@@ -106,7 +107,7 @@ function questInRange(circle,questpoint) {
 	}
 
 	if ( ! circle.contains(questpoint.getPosition())){
-		console.log("You're too far away to interact with that questpoint.");
+		ui.makeDialog("Too far away!",["You're too far away to interact with that questpoint."]);
 		return false;
 	} else {
 		return true;

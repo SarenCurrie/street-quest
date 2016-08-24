@@ -48,7 +48,7 @@ function checkPosition(questlog, markerToCheck) {
           var spawnQuestPointTmp = function (i) {
             var icon = quest.action[i+1].icon;
             var title = quest.action[0].nextPoint[i];
-            spawnQuestPoint(initialMarkerPos, title, icon, -100 + i * 200, 100 + i * 200, function (err, marker) {
+            spawnQuestPoint(initialMarkerPos, title, icon, -100 + (i+1) * 300, 100 + i * 300, function (err, marker) {
               if (err) {
                 console.log(err);
                 return;
