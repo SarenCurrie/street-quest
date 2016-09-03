@@ -36,7 +36,7 @@ function initMap() {
 			var location = {
 				lat: e.latLng.lat(),
 				lng: e.latLng.lng()
-			}
+			};
 			playerCircle.setCenter(location);
 		});
 
@@ -104,7 +104,7 @@ function spawnQuestPoint(position, title, icon, dx, dy, callback) {
 function questInRange(circle,questpoint) {
 	google.maps.Circle.prototype.contains = function(latLng) {
 		return this.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
-	}
+	};
 
 	if ( ! circle.contains(questpoint.getPosition())){
 		ui.makeDialog("Too far away!",["You're too far away to interact with that questpoint."]);
