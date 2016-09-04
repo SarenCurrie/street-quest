@@ -7,6 +7,10 @@ var ui = {
             self.hideMenu();
             self.makeDialog('Tate', ['I need help getting elected to coucil.', 'Help me by destroying 10 oppoision billboards.']);
         });
+        $('#clear_data').on('click', function () {
+            clearData();
+            ui.updatePlayerStats(getPlayerData());
+        });
 
         //Inventory events
         $('#show_inventory').on('click',function(){

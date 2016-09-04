@@ -18,3 +18,8 @@ var getPlayerData = function () {
 
   return _player;
 };
+
+function clearData() {
+  localStorage.clear();
+  _player = null;
+}
