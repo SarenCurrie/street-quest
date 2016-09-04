@@ -49,6 +49,15 @@ html, body {
     text-align: center;
 }
 
+#low_gps_container {
+    text-align: center;
+    position: absolute;
+    z-index: 1001;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+}
+
 /*#inventory .panel-heading {
     height: 10%;
 }*/
