@@ -13,7 +13,14 @@ var ui = {
             self.hideMenu();
             self.showInventory();
         });
-        $("#inventory .panel-footer").on('click',self.hideInventory);
+        $("#inventory .panel-footer").on('click', self.hideInventory);
+
+        //Quest Log events
+        $('#show_quest_log').on('click',function(){
+            self.hideMenu();
+            self.showQuestLog();
+        });
+        $("#inventory .panel-footer").on('click', self.hideQuestLog);
     },
 
     showMenu: function () {
@@ -49,6 +56,14 @@ var ui = {
     },
 
     hideInventory : function(){
+        $("#inventory_container").hide();
+    },
+
+    showQuestLog: function(){
+        $("#inventory_container").show();
+    },
+
+    hideQuestLog : function(){
         $("#inventory_container").hide();
     }
 }

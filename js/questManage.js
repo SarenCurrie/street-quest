@@ -34,8 +34,9 @@ function checkPosition(questlog, markerToCheck) {
       }
     }
   });
+
   questlog.forEach(function(quest){
-    if  (quest.active == false){
+    if (!quest.active) {
       quest.active = true;
 
       ui.makeDialog(quest.action[0].npcName, quest.action[0].dialog, function () {
