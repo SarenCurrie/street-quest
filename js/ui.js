@@ -50,5 +50,9 @@ var ui = {
 
     hideInventory : function(){
         $("#inventory_container").hide();
+    },
+
+    updatePlayerStats: function(player){
+        $("#show_player_stats").text('Player distance: ' + Math.round(player.traveledDistance) + 'm');
     }
 }

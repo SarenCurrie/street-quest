@@ -73,6 +73,7 @@ function initMap() {
 		ui.init();
 
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
+		ui.updatePlayerStats(getPlayerData());
 		navigator.geolocation.watchPosition(locationUpdated);
 	});
 }
@@ -147,6 +148,7 @@ function trackNewLocation(position) {
 	console.log("distance: " + distance);
 	console.log("total distance: " + player.traveledDistance);
 	player.save();
+	ui.updatePlayerStats(player);
 }
 
 function questInRange(circle,questpoint) {
