@@ -18,6 +18,12 @@
 		"completion_dialog": [
 			"Thanks bro! Here, take this! <hands over rune scimitar>"
 		],
+		"rewards": [{
+			"name": "Rune Scimitar",
+            "attack": 50,
+            "defence": 0,
+            "picture": "img/RuneScimitar.png"
+		}],
 		"nextPoint": [
 			"The water",
 			"The logs"
