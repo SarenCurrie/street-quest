@@ -58,5 +58,13 @@ var ui = {
 
     updatePlayerStats: function(player){
         $("#show_player_stats").text('Player distance: ' + Math.round(player.traveledDistance) + 'm');
+    },
+
+    showLowGpsWarning: function () {
+        $("#low_gps_container").show();
+    },
+    hideLowGpsWarning: function () {
+        $("#low_gps_container").hide();
     }
+
 }

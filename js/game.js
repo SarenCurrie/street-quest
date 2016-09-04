@@ -74,6 +74,7 @@ function initMap() {
 
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
 		ui.updatePlayerStats(getPlayerData());
+		locationUpdated(position);
 		navigator.geolocation.watchPosition(locationUpdated);
 	});
 }
@@ -130,10 +131,16 @@ function browserLocationToLatLng(location) {
  */
 function locationUpdated(newLocation) {
 	var position = browserLocationToLatLng(newLocation);
-	trackNewLocation(position);
 	playerMarker.setPosition(position);
 	playerCircle.setCenter(position);
 	playerCircle.setRadius(position.accuracy);
+	if (position.accuracy > 20) {
+		// Filter all location updates that have low accuracy.
+		ui.showLowGpsWarning();
+		return;
+	}
+	ui.hideLowGpsWarning();
+	trackNewLocation(position);
 }
 
 /**
@@ -143,6 +150,11 @@ function locationUpdated(newLocation) {
 function trackNewLocation(position) {
 	var player = getPlayerData();
 	var distance = distanceBetween(player.lastLocation, position);
+	if (distance < 5) {
+		// Skip all location updates that just come from
+		// the GPS location jumping around a few meters.
+		return;
+	}
 	player.lastLocation = position;
 	player.traveledDistance += distance;
 	console.log("distance: " + distance);
