@@ -12,11 +12,18 @@ function checkPosition(questlog, markerToCheck) {
         if (quest.action[quest.progress].name === "visitmutiple"){
           if (i == quest.progress){
             if (quest.action[quest.progress].visitedno == quest.action[quest.progress].nextPoint.length){
+              debugger;
               ui.makeDialog(quest.action[i].npcName, quest.action[i].completion_dialog);
               // remove all markers associated with the quest
-              for (var i=0; i < quest.positions.length; i++) {
-                quest.positions[i].setMap(null);
-                quest.positions[i] = null;
+              for (var j=0; j < quest.positions.length; j++) {
+                quest.positions[j].setMap(null);
+                quest.positions[j] = null;
+              }
+              // get a reward
+              var player = getPlayerData();
+              if(quest.action[i].rewards){
+                player.addItems(quest.action[i].rewards);
+                player.save();
               }
             } else {
               ui.makeDialog(quest.action[i].npcName, quest.action[i].visited_dialog);

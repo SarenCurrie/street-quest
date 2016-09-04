@@ -49,11 +49,30 @@ var ui = {
     },
 
     showInventory: function(){
-        $("#inventory_container").show();
+        $('#inventory_container').show();
+        var player = getPlayerData();
+        player.items.forEach(function(e){
+            var li = $('<li class="list-group-item"></li>');
+            if(e.picture){
+                var span = $('<span></span>');
+                span.text(e.name);
+                var thumbnail = $('<div class="thumbnail"></div>');
+                var img = $('<img></img>');
+                img.prop('src',e.picture);
+                thumbnail.append(img);
+                li.append(thumbnail);
+                li.append(span);
+            } else {
+                li.text(e.name);
+            }
+            $('#inventory_list').append(li);
+        });
+        console.log(player);
     },
 
     hideInventory : function(){
-        $("#inventory_container").hide();
+        $('#inventory_list').empty();
+        $('#inventory_container').hide();
     },
 
     updatePlayerStats: function(player){

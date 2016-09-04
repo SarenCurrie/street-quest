@@ -5,17 +5,29 @@ var getPlayerData = function () {
     _player = {
       points: 0,
       traveledDistance: 0,
-      lastLocation: null
+      lastLocation: null,
+      items: [{
+        name: "Cape",
+        attack: 0,
+        defence: 0 
+      },{
+        name: "Rune PlateBody",
+        attack: 0,
+        defence: 100,
+        picture: "img/RunePlate.png"
+      }]
     };
   }
 
-  if (!_player.save) {
-    // add save() function to parsed object
-    _player.save = function () {
-      localStorage.setItem('playerData', JSON.stringify(_player));
-    };
-  }
+  // add save() function to parsed object
+  _player.save = function () {
+    localStorage.setItem('playerData', JSON.stringify(_player));
+  };
 
+  _player.addItems = function(items){
+    var items = _player.items.concat(items);
+    _player.items = items;
+  }
   return _player;
 };
 
