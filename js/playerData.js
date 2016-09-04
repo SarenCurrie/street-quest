@@ -4,7 +4,7 @@ var getPlayerData = function () {
   if (_player) {
     return _player;
   } else {
-    var _player = {
+    _player = {
       points: 0,
 
       // Saves the player's data to browser's localStorage.
@@ -14,5 +14,6 @@ var getPlayerData = function () {
         }));
       }
     };
+    return _player;
   }
 }
