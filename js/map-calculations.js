@@ -43,3 +43,13 @@ function adjustPosition(position, geocoder, callback) {
 		}
 	});
 }
+
+/**
+ * Calculates the distance between two positions (lat / lng pairs).
+ * @param pos1 First position.
+ * @param pos2 Second position.
+ * @returns {number} distance in meters
+ */
+function distanceBetween(pos1, pos2) {
+	return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(pos1), new google.maps.LatLng(pos2));
+}

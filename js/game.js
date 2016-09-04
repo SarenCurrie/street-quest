@@ -35,9 +35,10 @@ function initMap() {
 		marker.addListener('dragend',function(e){
 			var location = {
 				lat: e.latLng.lat(),
-				lng: e.latLng.lng()
+				lng: e.latLng.lng(),
+				accuracy: playerCircle.getRadius()
 			};
-			playerCircle.setCenter(location);
+			locationUpdated(latLngToBrowserLocation(location));
 		});
 
 		function loadJSON(callback) {
@@ -70,6 +71,9 @@ function initMap() {
 			});
 		});
 		ui.init();
+
+		getPlayerData().lastLocation = browserLocationToLatLng(position);
+		navigator.geolocation.watchPosition(locationUpdated);
 	});
 }
 
@@ -99,6 +103,49 @@ function spawnQuestPoint(position, title, icon, dx, dy, callback) {
 		});
 		callback(null, marker);
 	});
+}
+
+/**
+ * Converts an object with 'lat', 'lng', and 'accuracy' fields to a browser location object.
+ * @param latlng The object to convert.
+ * @returns {{coords: {latitude: *, longitude: *, accuracy: (*|Number)}}}
+ */
+function latLngToBrowserLocation(latlng) {
+	return {coords: {latitude: latlng.lat, longitude: latlng.lng, accuracy: latlng.accuracy}};
+}
+
+/**
+ * Converts a browser location to a lat lng object.
+ * @param location The location to convert.
+ * @returns {{lat: *, lng: *, accuracy: (*|Number)}}
+ */
+function browserLocationToLatLng(location) {
+	return {lat: location.coords.latitude, lng: location.coords.longitude, accuracy: location.coords.accuracy};
+}
+
+/**
+ * Callback that gets invoked whenever the player's position has changed.
+ * @param newLocation The new location of the player.
+ */
+function locationUpdated(newLocation) {
+	var position = browserLocationToLatLng(newLocation);
+	trackNewLocation(position);
+	playerCircle.setCenter(position);
+	playerCircle.setRadius(position.accuracy);
+}
+
+/**
+ * Calculates the distance between the player's current and last position and adds it to the traveled distance.
+ * @param position The current position of the player.
+ */
+function trackNewLocation(position) {
+	var player = getPlayerData();
+	var distance = distanceBetween(player.lastLocation, position);
+	player.lastLocation = position;
+	player.traveledDistance += distance;
+	console.log("distance: " + distance);
+	console.log("total distance: " + player.traveledDistance);
+	player.save();
 }
 
 function questInRange(circle,questpoint) {

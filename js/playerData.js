@@ -1,19 +1,20 @@
-var _player = localStorage.getItem('playerData');
+var _player = JSON.parse(localStorage.getItem('playerData'));
 
 var getPlayerData = function () {
-  if (_player) {
-    return _player;
-  } else {
+  if (!_player) {
     _player = {
       points: 0,
-
-      // Saves the player's data to browser's localStorage.
-      save: function () {
-        localStorage.setItem('playerData', JSON.stringify({
-          points: _player.points
-        }));
-      }
+      traveledDistance: 0,
+      lastLocation: null
     };
-    return _player;
   }
-}
+
+  if (!_player.save) {
+    // add save() function to parsed object
+    _player.save = function () {
+      localStorage.setItem('playerData', JSON.stringify(_player));
+    };
+  }
+
+  return _player;
+};
