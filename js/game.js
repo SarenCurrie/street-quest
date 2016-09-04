@@ -1,5 +1,6 @@
 var map;
 var geocoder;
+var playerMarker;
 var playerCircle;
 function initMap() {
 	if (!navigator.geolocation){
@@ -25,14 +26,13 @@ function initMap() {
 			center: {lat: position.coords.latitude, lng: position.coords.longitude},
 			radius: position.coords.accuracy
 		});
-		var marker = new google.maps.Marker({
+		playerMarker = new google.maps.Marker({
 			position: {lat: position.coords.latitude, lng: position.coords.longitude},
 			map: map,
 			title: 'Player',
 			draggable: true
 		});
-
-		marker.addListener('dragend',function(e){
+		playerMarker.addListener('dragend',function(e){
 			var location = {
 				lat: e.latLng.lat(),
 				lng: e.latLng.lng(),
@@ -130,6 +130,7 @@ function browserLocationToLatLng(location) {
 function locationUpdated(newLocation) {
 	var position = browserLocationToLatLng(newLocation);
 	trackNewLocation(position);
+	playerMarker.setPosition(position);
 	playerCircle.setCenter(position);
 	playerCircle.setRadius(position.accuracy);
 }
