@@ -12,7 +12,6 @@ function checkPosition(questlog, markerToCheck) {
         if (quest.action[quest.progress].name === "visitmutiple"){
           if (i == quest.progress){
             if (quest.action[quest.progress].visitedno == quest.action[quest.progress].nextPoint.length){
-              debugger;
               ui.makeDialog(quest.action[i].npcName, quest.action[i].completion_dialog);
               // remove all markers associated with the quest
               for (var j=0; j < quest.positions.length; j++) {
