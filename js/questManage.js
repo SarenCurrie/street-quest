@@ -1,4 +1,5 @@
 function checkPosition(questlog, markerToCheck) {
+  var hit = false;
   questlog.forEach(function(quest){
     var arrayLength = quest.positions.length;
     for (var i = 0; i < arrayLength; i++){
@@ -9,8 +10,9 @@ function checkPosition(questlog, markerToCheck) {
           && markerToCheck.getPosition().lat() == quest.positions[i].getPosition().lat()){
         // we are in a quest, do that action
         // check what the progress is for this quest
-
+        console.log('i got here and everything was ok');
         // first things first, if any of the points we need to go to haven't been made, make them right now! ahh!
+        if (quest.action[i].completed != true){ // these should be changed into something that's not boolean comparisons lol
         for (var j = 0; j < quest.action[i].to_visit[quest.action[i].progress].length; j++){
           if (quest.positions[quest.action[i].to_visit[quest.action[i].progress][j]] == null){
             var initialMarkerPos = {lat: markerToCheck.getPosition().lat(), lng: markerToCheck.getPosition().lng()};
@@ -34,6 +36,7 @@ function checkPosition(questlog, markerToCheck) {
             spawnQuestPointTmp(i,j);
           }
         }
+      }
         // then, check if we've been here before
           if (quest.action[i].visited != true){
               quest.action[i].visited = true;
@@ -41,6 +44,7 @@ function checkPosition(questlog, markerToCheck) {
             // if this is the first time we've been here, see if anything else needs doing
             if (quest.action[i].to_visit.length == 0){
               quest.action[i].completed = true;
+
             }
             // if we've been here, and we've finished here, then say that's the case, using the u r done dialog
           } else if (quest.action[i].completed == true){
@@ -69,15 +73,29 @@ function checkPosition(questlog, markerToCheck) {
           }
           // get a reward
           var player = getPlayerData();
-          if(quest.action[i].rewards[progress]){
-            player.addItems(quest.action[i].rewards[progress]);
+          if(quest.action[i].rewards){
+            player.addItems(quest.action[i].rewards[quest.action[i].progress]);
             player.save();
           }
+          if(quest.action[i].remove_points){
           for (var j=0; j < quest.action[i].remove_points[quest.action[i].progress-1].length; j++) {
             quest.positions[quest.action[i].remove_points[quest.action[i].progress-1][j]].setMap(null);
             quest.positions[quest.action[i].remove_points[quest.action[i].progress-1][j]] = null;
           }
         }
+        }
+            hit = true;
+    return;
     }
-  });
+  }});
+  // you clicked a point that isnt associated with a quest, oh boy, allocate and call this again
+if (!hit){
+ questlog.forEach(function(quest){
+   if  (quest.active == false){
+     quest.active = true;
+     quest.positions[0] = markerToCheck;
+     checkPosition(questlog, markerToCheck);
+     return;
+   }  })
+ }
 }

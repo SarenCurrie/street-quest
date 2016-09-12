@@ -17,7 +17,7 @@
 			[["Hurry! Registration closes soon!"],["Thanks for the logs, but I am still SO THIRSTY.","SOOOOO THIRSTYYYY"]]
 		],
 		"completion_dialog": [
-			["Thanks bro! Here, take this! <hands over rune scimitar>"]
+			["Thanks bro! Here, take this! <hands over rune scimitar>"],["Thanks again for helping me out! Even though you gave me Zika."]
 		],
 		"rewards": [[{
 			"name": "Rune Scimitar",
@@ -33,13 +33,13 @@
 		"progress": 0,
 		"visited" : false,
 		"completed" : false,
-		"to_visit" : [],
+		"to_visit" : [[]],
 		"intro_dialog": [
 			"You fish a glass of dirty water out of the fountain using a homeless mans change cup.",
 			"Oh well, better than Rio."
 		],
 		"completion_dialog": [
-			["I don't think you want a drink from here for yourself."]
+			[],["I don't think you want a drink from here for yourself."]
 		]
 	},{
 		"name": "The logs",
@@ -49,12 +49,12 @@
 		"progress": 0,
 		"visited" : false,
 		"completed" : false,
-		"to_visit" : [],
+		"to_visit" : [[]],
 		"intro_dialog": [
 			"You gather some twigs from a small pile on the ground. How convenient."
 		],
 		"completion_dialog": [
-			["There are no more twigs to collect."]
+			[],["There are no more twigs to collect."]
 		]
 	}],
 	"positions" : [null,null,null]
