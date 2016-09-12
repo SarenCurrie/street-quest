@@ -1,6 +1,6 @@
 [{
 	"questName": "Albert Park Adventure",
-	"active": false,
+	"active": true,
 	"action": [{
 		"name" : "A struggling rower",
 		"npcName": "Deen",
@@ -9,6 +9,7 @@
 		"visited" : false,
 		"completed" : false,
 		"to_visit" : [[1,2]],
+		"create_points" : [[1,2]],
 		"intro_dialog": [
 			"Hey man, I'm trying out for the uni rowing squad. I'm gonna need to build a raft to train on. Can you go grab me some logs?",
 			"Oh, and some water too please. I'm thirsty."
@@ -58,4 +59,90 @@
 		]
 	}],
 	"positions" : [null,null,null]
-}]
+},{
+	"questName": "Gertrude's Cat",
+	"active": false,
+	"action": [{
+		"name" : "Gertrude's house",
+		"npcName": "Gertrude",
+		"icon": "./img/Hat.png",
+		"progress": 0,
+		"visited" : false,
+		"completed" : false,
+		"to_visit" : [[1,3]],
+		"create_points" : [[1]],
+		"intro_dialog": [
+			"GAH! Those kids drive me crazy.",
+			"I'm sorry, it's just that I've lost her.",
+			"My beloved feline friend, Fluffs. She's been purring by my side for almost a decade.",
+			"Please, could you go search for her while I look over the kids?",
+			"Thank you so much! I think my sons saw the cat last. They'll be out in the market place."
+		],
+		"been_here_not_visited_dialog" : [
+			[["Take your time."],["You know where my cat is? WHY AREN'T YOU HEADING THERE RIGHT NOW BHJGVRTBHJRT"]]
+		],
+		"been_here_not_completed_dialog" : [
+			[["Those little brats! Find out what they know!"],["You should never ever ever get this dialogue prompt."]]
+		],
+		"completion_dialog": [
+			["Thank you so much! How could I ever repay you? Oh, I know! <hands over rune scimitar>"],["What do you want, a medal?"]
+		],
+		"rewards": [[{
+			"name": "Rune Scimitar",
+						"attack": 50,
+						"defence": 0,
+						"picture": "img/RuneScimitar.png"
+		}]],
+		"remove_points" :[[1,2,3]]
+	},{
+		"name": "Varrock square",
+		"npcName": "Shilop and Wilough",
+		"icon": "./img/Gloves.png",
+		"progress": 0,
+		"visited" : false,
+		"completed" : false,
+		"to_visit" : [[2],[]],
+		"create_points" : [[2],[3],[3]],
+		"intro_dialog": [
+			"Oh, the cat? Yeah, they're ded lol.",
+			"Just kidding. We seem to have forgotten where they are though. Maybe 100 gold could remind us?"
+		],
+		"been_here_not_visited_dialog" : [
+			[["Well, one thing's for sure, you standing around here isn't helping remind us."]]
+		],
+		"completion_dialog": [
+			["Oh, I remember now, yeah! We hid them in the treehouse! Can't believe I forgot."],["Oh, yeah. Treehouse is that way. Kinda important."],["For another 100, we can hide the cat somewhere else."]
+		]
+	},{
+		"name": "A pile of money",
+		"npcName": "",
+		"icon": "./img/Chest1Closed.png",
+		"visited" : false,
+		"progress": 0,
+		"visited" : false,
+		"completed" : false,
+		"to_visit" : [[]],
+		"intro_dialog": [
+			"You found a pile of money on the ground. Good thing this is real life."
+		],
+		"completion_dialog": [
+			[],["Hey, don't you have a cat to be finding?"]
+		]
+	},{
+		"name": "The treehouse",
+		"npcName": "",
+		"icon": "./img/Chest1Closed.png",
+		"visited" : false,
+		"progress": 0,
+		"visited" : false,
+		"completed" : false,
+		"to_visit" : [[]],
+		"intro_dialog": [
+			"You find and collect the cat with no problems because I am too lazy to write more."
+		],
+		"completion_dialog": [
+			[],["I'm not kidding. This is it."]
+		]
+	}],
+	"positions" : [null,null,null,null]
+	}]
