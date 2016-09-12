@@ -80,9 +80,11 @@ function checkPosition(questlog, markerToCheck) {
           quest.action[i].completed = true;
         }
         // get a reward
+
         var player = getPlayerData();
         if(quest.action[i].rewards){
-          player.addItems(quest.action[i].rewards[quest.action[i].progress]);
+          debugger;
+          player.addItems(quest.action[i].rewards[quest.action[i].progress-1]);
           player.save();
         }
         if(quest.action[i].remove_points){
