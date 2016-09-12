@@ -2,6 +2,10 @@ var map;
 var geocoder;
 var playerMarker;
 var playerCircle;
+// If the location accuracy is higher than this (in meters),
+// tracking will be disabled.
+var MAXIMUM_LOCATION_ACCURACY = 20;
+
 function initMap() {
 	if (!navigator.geolocation){
 		output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
@@ -75,7 +79,8 @@ function initMap() {
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
 		ui.updatePlayerStats(getPlayerData());
 		locationUpdated(position);
-		navigator.geolocation.watchPosition(locationUpdated);
+		var locationOptions = {enableHighAccuracy: true};
+		navigator.geolocation.watchPosition(locationUpdated, null, locationOptions);
 	});
 }
 
@@ -134,7 +139,7 @@ function locationUpdated(newLocation) {
 	playerMarker.setPosition(position);
 	playerCircle.setCenter(position);
 	playerCircle.setRadius(position.accuracy);
-	if (position.accuracy > 20) {
+	if (position.accuracy > MAXIMUM_LOCATION_ACCURACY) {
 		// Filter all location updates that have low accuracy.
 		ui.showLowGpsWarning();
 		return;
