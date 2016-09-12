@@ -14,7 +14,7 @@
 			"Oh, and some water too please. I'm thirsty."
 		],
 		"been_here_not_visited_dialog" : [
-			["Hurry! Registration closes soon!"]
+			[["Hurry! Registration closes soon!"],["Thanks for the logs, but I am still SO THIRSTY.","SOOOOO THIRSTYYYY"]]
 		],
 		"completion_dialog": [
 			["Thanks bro! Here, take this! <hands over rune scimitar>"]
