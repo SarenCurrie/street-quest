@@ -1,55 +1,60 @@
 [{
 	"questName": "Albert Park Adventure",
 	"active": false,
-	"progress": 0,
 	"action": [{
-		"name": "visitmutiple",
+		"name" : "A struggling rower",
 		"npcName": "Deen",
 		"icon": "./img/Sword.png",
+		"progress": 0,
 		"visited" : false,
-		"visitedno" : 0,
-		"dialog": [
+		"completed" : false,
+		"to_visit" : [[1,2]],
+		"intro_dialog": [
 			"Hey man, I'm trying out for the uni rowing squad. I'm gonna need to build a raft to train on. Can you go grab me some logs?",
 			"Oh, and some water too please. I'm thirsty."
 		],
-		"visited_dialog" : [
-			"Hurry! Registration closes soon!"
+		"been_here_not_visited_dialog" : [
+			["Hurry! Registration closes soon!"]
 		],
 		"completion_dialog": [
-			"Thanks bro! Here, take this! <hands over rune scimitar>"
+			["Thanks bro! Here, take this! <hands over rune scimitar>"]
 		],
-		"rewards": [{
+		"rewards": [[{
 			"name": "Rune Scimitar",
             "attack": 50,
             "defence": 0,
             "picture": "img/RuneScimitar.png"
-		}],
-		"nextPoint": [
-			"The water",
-			"The logs"
-		]
+		}]],
+		"remove_points" :[[1,2]]
 	},{
-		"name": "return",
+		"name": "The water",
 		"npcName": "",
 		"icon": "./img/Gloves.png",
-    "visited" : false,
-		"dialog": [
+		"progress": 0,
+		"visited" : false,
+		"completed" : false,
+		"to_visit" : [],
+		"intro_dialog": [
 			"You fish a glass of dirty water out of the fountain using a homeless mans change cup.",
 			"Oh well, better than Rio."
 		],
-		"visited_dialog" : [
-			"I don't think you want a drink from here for yourself."
+		"completion_dialog": [
+			["I don't think you want a drink from here for yourself."]
 		]
 	},{
-		"name": "return",
+		"name": "The logs",
 		"npcName": "",
 		"icon": "./img/Chest1Closed.png",
     "visited" : false,
-		"dialog": [
+		"progress": 0,
+		"visited" : false,
+		"completed" : false,
+		"to_visit" : [],
+		"intro_dialog": [
 			"You gather some twigs from a small pile on the ground. How convenient."
 		],
-		"visited_dialog" : [
-			"There are no more twigs to collect."
+		"completion_dialog": [
+			["There are no more twigs to collect."]
 		]
 	}],
 	"positions" : [null,null,null]
