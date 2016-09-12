@@ -75,7 +75,8 @@ function initMap() {
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
 		ui.updatePlayerStats(getPlayerData());
 		locationUpdated(position);
-		navigator.geolocation.watchPosition(locationUpdated);
+		var locationOptions = {enableHighAccuracy: true};
+		navigator.geolocation.watchPosition(locationUpdated, null, locationOptions);
 	});
 }
 
