@@ -5,6 +5,9 @@ var playerCircle;
 // If the location accuracy is higher than this (in meters),
 // tracking will be disabled.
 var MAXIMUM_LOCATION_ACCURACY = 20;
+// Quest can be interacted with if the player is kinda close
+// to the quest point.
+var QUEST_IN_RANGE_RADIUS = 30;
 
 function initMap() {
 	if (!navigator.geolocation){
@@ -170,7 +173,7 @@ function trackNewLocation(position) {
 
 function questInRange(circle,questpoint) {
 	google.maps.Circle.prototype.contains = function(latLng) {
-		return this.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
+		return google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius() + QUEST_IN_RANGE_RADIUS;
 	};
 
 	if ( ! circle.contains(questpoint.getPosition())){
