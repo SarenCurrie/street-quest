@@ -29,7 +29,7 @@ function nextCombatStep(state) {
 			return;
 		}
 		state.nextMovePlayer = false;
-		ui.makeCombatButton(function() {
+		ui.makeDialog(state.monsterName, ["Scary Attack!"], function() {
 			nextCombatStep(state);
 		});
 	} else {
@@ -51,7 +51,7 @@ function nextCombatStep(state) {
 			return;
 		}
 		state.nextMovePlayer = true;
-		ui.makeDialog(state.monsterName, ["Scary Attack!"], function() {
+		ui.makeCombatButton(function() {
 			nextCombatStep(state);
 		});
 	}
@@ -76,6 +76,8 @@ function startCombat(monsterName, monsterHealth, monsterAttack, monsterDefense) 
 	ui.updateCombat(combatState.playerHealth, combatState.playerDefense, combatState.monsterHealth, combatState.monsterDefense);
 	ui.startCombat();
 	ui.makeDialog(combatState.playerName, ["Alright, I'm ready for this fight!"], function() {
-		nextCombatStep(combatState);
+		ui.makeCombatButton(function() {
+			nextCombatStep(combatState);
+		});
 	});
 }
