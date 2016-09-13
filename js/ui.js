@@ -59,6 +59,28 @@ var ui = {
         });
     },
 
+    makeCombatButton: function (next) {
+      var dialogRight = 'auto';
+      var dialogLeft = 'auto';
+
+      dialogRight = '5%';
+      $('#dialog_container').css({
+         'right': dialogRight,
+         'left': dialogLeft
+      });
+
+      $('#dialog').show();
+      $('#dialog_speaker').text(getPlayerData().name);
+      $('#dialog_text').text('').append('<a class="btn btn-primary">Attack</a>');
+
+      $('#dialog').on('click', function () {
+
+        $('#dialog').hide()
+        .off('click');
+        next && next();
+      });
+    },
+
     showInventory: function(){
         $('#inventory_container').show();
         var player = getPlayerData();

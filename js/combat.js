@@ -29,7 +29,7 @@ function nextCombatStep(state) {
 			return;
 		}
 		state.nextMovePlayer = false;
-		ui.makeDialog(state.playerName, ["Best Attack!"], function() {
+		ui.makeCombatButton(function() {
 			nextCombatStep(state);
 		});
 	} else {
