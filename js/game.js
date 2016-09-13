@@ -76,6 +76,9 @@ function initMap() {
 		});
 		ui.init();
 
+		// TODO: remove, spawn on monster quest interaction
+		startCombat('Dragon', 100, 23, 10);
+
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
 		ui.updatePlayerStats(getPlayerData());
 		locationUpdated(position);

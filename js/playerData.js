@@ -6,6 +6,8 @@ var getPlayerData = function () {
       points: 0,
       traveledDistance: 0,
       lastLocation: null,
+      health: 100,
+      name: 'Player',
       items: [{
         name: "Cape",
         attack: 0,

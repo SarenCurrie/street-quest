@@ -32,6 +32,17 @@ var ui = {
     },
 
     makeDialog: function (name, text, next) {
+        var dialogRight = 'auto';
+        var dialogLeft = 'auto';
+        if (name === getPlayerData().name) {
+            // show dialog on the right if the player is speaking
+            dialogRight = '5%';
+        }
+        $('#dialog_container').css({
+           'right': dialogRight,
+           'left': dialogLeft
+        });
+
         $('#dialog').show();
         $('#dialog_speaker').text(name);
         $('#dialog_text').text(text[0]);
@@ -84,6 +95,29 @@ var ui = {
     },
     hideLowGpsWarning: function () {
         $("#low_gps_container").hide();
+    },
+
+    startCombat: function() {
+        $("#map").css('visibility', 'hidden');
+        $("#combat_container").show();
+    },
+    finishCombat: function(monsterDied) {
+        var dialogText;
+        if (monsterDied) {
+            // TODO: show dead monster
+            dialogText = ["I beat the sh*t out of this freaky monster!"];
+        } else {
+            // TODO: show dead player
+            dialogText = ["I was too weak!"];
+        }
+        ui.makeDialog(getPlayerData().name, dialogText, function() {
+            $("#combat_container").hide();
+            $("#map").css('visibility', 'visible');
+        });
+    },
+    updateCombat: function(playerHealth, playerDefense, monsterHealth, monsterDefense) {
+        $("#player_health").text("Player health: " + playerHealth + ", defense: " + playerDefense);
+        $("#monster_health").text("Monster health: " + monsterHealth + ", defense: " + monsterDefense);
     }
 
 }

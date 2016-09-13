@@ -15,6 +15,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script src="js/combat.js"></script>
 	<script src="js/playerData.js"></script>	
 	<script src="js/ui.js" charset="utf-8"></script>
 	<script src="js/map-calculations.js"></script>
@@ -66,6 +67,17 @@
 		</div>
 	</div>
 	<div id="map"></div>
+	<div id="combat_container" style="display: none">
+		<div id="combat">
+			<div id="player_health">
+				Player health: 100, defense: 100
+			</div>
+
+			<div id="monster_health">
+				Monster health: 100, defense: 100
+			</div>
+		</div>
+	</div>
 	<script src="js/game.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmURcC0_8TFTJ4RTGSWFskNeF4XOMzB0U&libraries=geometry&callback=initMap"
 	async defer></script>

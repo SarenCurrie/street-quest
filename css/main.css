@@ -35,6 +35,13 @@ html, body {
     vertical-align: bottom;
 }
 
+#combat_container {
+    position: absolute;
+    top: 50%;
+    z-index: 1001;
+    vertical-align: bottom;
+}
+
 #inventory_container {
     position: absolute;
     left: 5%;
