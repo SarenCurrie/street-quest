@@ -17,10 +17,16 @@ function initMap() {
 
 	navigator.geolocation.getCurrentPosition(function(position) {
 		console.log(position);
-		map = new google.maps.Map(document.getElementById('map'), {
-			center: {lat: position.coords.latitude, lng: position.coords.longitude}, //Uni
-			zoom: 17
-		});
+
+
+		var mapOptions = {
+			center: {lat: position.coords.latitude, lng: position.coords.longitude},
+			zoom: 17,
+			disableDefaultUI: true,
+			styles: [{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"labels","stylers":[{"visibility":"off"}]}]
+		};
+
+		map = new google.maps.Map(document.getElementById('map'), mapOptions);
 		geocoder = new google.maps.Geocoder;
 
 		playerCircle = new google.maps.Circle({
