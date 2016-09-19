@@ -9,6 +9,11 @@ var MAXIMUM_LOCATION_ACCURACY = 20;
 // collect items even if they are not exactly next to it
 // to avoid having to enter buildings etc.
 var INTERACTION_RADIUS = 40;
+// support game modes
+var MODE_NOGOALS = 0;
+var MODE_DISTANCE = 1;
+// gameplay mode the game currently uses
+var mode = MODE_NOGOALS;
 
 function initMap() {
 	if (!navigator.geolocation){
@@ -55,35 +60,38 @@ function initMap() {
 			locationUpdated(latLngToBrowserLocation(location));
 		});
 
-		function loadJSON(callback) {
+		if (mode == MODE_DISTANCE) {
+			function loadJSON(callback) {
 
-			var xobj = new XMLHttpRequest();
-			xobj.overrideMimeType("application/json");
-			xobj.open('GET', './js/quests.json', true); // Replace 'my_data' with the path to your file
-			xobj.onreadystatechange = function () {
-				if (xobj.readyState == 4 && xobj.status == "200") {
-					// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-					callback(xobj.responseText);
-				}
-			};
-			xobj.send(null);
-		}
-
-		loadJSON(function(response) {
-			// Parse JSON string into object
-			var questLog = JSON.parse(response);
-			spawnQuestPoint({lat: position.coords.latitude, lng: position.coords.longitude}, 'Quest Start', questLog[0].action[0].icon, -100, 100, function(err, marker) {
-				if (err) {
-					console.log(err);
-					return;
-				}
-				marker.addListener('click', function() {
-					if (questInRange(playerCircle, marker)) {
-						checkPosition(questLog, marker);
+				var xobj = new XMLHttpRequest();
+				xobj.overrideMimeType("application/json");
+				xobj.open('GET', './js/quests.json', true); // Replace 'my_data' with the path to your file
+				xobj.onreadystatechange = function () {
+					if (xobj.readyState == 4 && xobj.status == "200") {
+						// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+						callback(xobj.responseText);
 					}
+				};
+				xobj.send(null);
+			}
+
+			loadJSON(function(response) {
+				// Parse JSON string into object
+				var questLog = JSON.parse(response);
+				spawnQuestPoint({lat: position.coords.latitude, lng: position.coords.longitude}, 'Quest Start', questLog[0].action[0].icon, -100, 100, function(err, marker) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					marker.addListener('click', function() {
+						if (questInRange(playerCircle, marker)) {
+							checkPosition(questLog, marker);
+						}
+					});
 				});
 			});
-		});
+		}
+
 		ui.init();
 
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
