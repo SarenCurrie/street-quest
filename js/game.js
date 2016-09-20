@@ -5,9 +5,10 @@ var playerCircle;
 // If the location accuracy is higher than this (in meters),
 // tracking will be disabled.
 var MAXIMUM_LOCATION_ACCURACY = 20;
-// Quest can be interacted with if the player is kinda close
-// to the quest point.
-var QUEST_IN_RANGE_RADIUS = 30;
+// Players should be able to interact with quest points and
+// collect items even if they are not exactly next to it
+// to avoid having to enter buildings etc.
+var INTERACTION_RADIUS = 40;
 
 function initMap() {
 	if (!navigator.geolocation){
@@ -37,7 +38,7 @@ function initMap() {
 			fillOpacity: 0.25,
 			map: map,
 			center: {lat: position.coords.latitude, lng: position.coords.longitude},
-			radius: position.coords.accuracy
+			radius: INTERACTION_RADIUS
 		});
 		playerMarker = new google.maps.Marker({
 			position: {lat: position.coords.latitude, lng: position.coords.longitude},
@@ -147,7 +148,7 @@ function locationUpdated(newLocation) {
 	var position = browserLocationToLatLng(newLocation);
 	playerMarker.setPosition(position);
 	playerCircle.setCenter(position);
-	playerCircle.setRadius(40);
+	playerCircle.setRadius(INTERACTION_RADIUS);
 	if (position.accuracy > MAXIMUM_LOCATION_ACCURACY) {
 		// Filter all location updates that have low accuracy.
 		ui.showLowGpsWarning();
@@ -179,7 +180,7 @@ function trackNewLocation(position) {
 
 function questInRange(circle,questpoint) {
 	google.maps.Circle.prototype.contains = function(latLng) {
-		return google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius() + QUEST_IN_RANGE_RADIUS;
+		return google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= INTERACTION_RADIUS;
 	};
 
 	if ( ! circle.contains(questpoint.getPosition())){
