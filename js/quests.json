@@ -1,6 +1,6 @@
 [{
 	"questName": "Albert Park Adventure",
-	"active": true,
+	"active": false,
 	"action": [{
 		"name" : "A struggling rower",
 		"npcName": "Deen",

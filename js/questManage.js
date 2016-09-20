@@ -1,5 +1,6 @@
-function checkPosition(questlog, markerToCheck) {
+function checkPosition(questlog, markerToCheck, markersPos, map) {
   var hit = false;
+  console.log('Doing magic! (^ . ^) ~ ~ * . *');
   questlog.forEach(function(quest){
     var arrayLength = quest.positions.length;
     for (var i = 0; i < arrayLength; i++){
@@ -80,10 +81,19 @@ function checkPosition(questlog, markerToCheck) {
           quest.action[i].completed = true;
         }
 
+        // raise the dead! hopefully we can bring them back ;o
+        if (i == 0){ // if we finished the start
+          console.log('Putting quest points back.');
+          markersPos.forEach(function(markerInfo){
+            if (!(markerInfo.lng  == markerToCheck.getPosition().lng() && markerInfo.lat  == markerToCheck.getPosition().lat())){
+              markerInfo.marker.setMap(map);
+            }
+          });
+        }
+
         // get a reward
         var player = getPlayerData();
         if(quest.action[i].rewards){
-          debugger;
           player.gold += 10;
           player.addItems(quest.action[i].rewards[quest.action[i].progress-1]);
           player.save();
@@ -101,13 +111,23 @@ function checkPosition(questlog, markerToCheck) {
     }
   }});
   // you clicked a point that isnt associated with a quest, oh boy, allocate and call this again
+  console.log('Unasscoiated! Uh oh!');
   if (!hit){
-    questlog.forEach(function(quest){
+    questlog.some(function(quest){
       if  (quest.active == false){
+        console.log('Found inactive quest!');
         quest.active = true;
         quest.positions[0] = markerToCheck;
         checkPosition(questlog, markerToCheck);
-        return;
-      }  })
+        // delete all the other markers from the map (maybe)
+        // this should only occur if all the markers are show anyway
+        console.log('Removing other quest points.');
+        markersPos.forEach(function(markerInfo){
+          if (!(markerInfo.lng  == markerToCheck.getPosition().lng() && markerInfo.lat  == markerToCheck.getPosition().lat())){
+            markerInfo.marker.setMap(null);
+          }
+        });
+        return true;
+      }  });
     }
   }
