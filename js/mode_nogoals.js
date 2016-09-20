@@ -12,7 +12,10 @@ var ZINDEX_POINT = 2000;
 // After this threshold, we spawn new points close
 // to the player. This allows players to not move
 // at all and still collect a few points.
-var SPAWN_CLOSE_POINTS_AFTER_TIMEOUT_SECS = 120;
+var SPAWN_CLOSE_POINTS_AFTER_TIMEOUT_SECS = 20;
+// How many points to spawn when the player does not
+// collect points.
+var AMOUNT_OF_LAZY_POINTS = 1;
 
 var spawned_points = {};
 var visible_points = 0;
@@ -76,7 +79,7 @@ function collect_point(point) {
  * Spawns a few points close to the player.
  */
 function spawn_close_points() {
-	for (var i=0; i < 10; i++) {
+	for (var i=0; i < AMOUNT_OF_LAZY_POINTS; i++) {
 		spawn_random_point(0, 20, getPlayerPosition());
 	}
 }
