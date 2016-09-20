@@ -75,8 +75,8 @@ var ui = {
         $('#inventory_container').hide();
     },
 
-    updatePlayerStats: function(player){
-        $("#show_player_stats").text('Player distance: ' + Math.round(player.traveledDistance) + 'm');
+    updatePlayerStats: function(player) {
+        $("#show_player_stats").html('Player Distance: ' + Math.round(player.traveledDistance) + 'm<br/>Player Gold: ' + player.gold);
     },
 
     showLowGpsWarning: function () {

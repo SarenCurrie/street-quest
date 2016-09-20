@@ -20,7 +20,7 @@ function checkPosition(questlog, markerToCheck) {
               var spawnQuestPointTmp = function (i,j) {
                 var icon = quest.action[quest.action[i].create_points[quest.action[i].progress][j]].icon;
                 var title = quest.action[quest.action[i].create_points[quest.action[i].progress][j]].name;
-                spawnQuestPoint(initialMarkerPos, title, icon, -100 + (Math.floor(Math.random() * 6) + 1) * 300, 100 + (Math.floor(Math.random() * 6) + 1 ) * 300, function (err, marker) {
+                spawnQuestPoint(initialMarkerPos, title, icon, -100 + (Math.floor(Math.random() * 6) + 1) * 100, 100 + (Math.floor(Math.random() * 6) + 1 ) * 100, function (err, marker) {
                   if (err) {
                     console.log(err);
                     return;
@@ -79,13 +79,15 @@ function checkPosition(questlog, markerToCheck) {
         if (quest.action[i].progress >= quest.action[i].to_visit.length){
           quest.action[i].completed = true;
         }
-        // get a reward
 
+        // get a reward
         var player = getPlayerData();
         if(quest.action[i].rewards){
           debugger;
+          player.gold += 10;
           player.addItems(quest.action[i].rewards[quest.action[i].progress-1]);
           player.save();
+          ui.updatePlayerStats(player);
         }
         if(quest.action[i].remove_points){
           for (var j=0; j < quest.action[i].remove_points[quest.action[i].progress-1].length; j++) {

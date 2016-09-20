@@ -22,9 +22,9 @@
 		],
 		"rewards": [[{
 			"name": "Rune Scimitar",
-            "attack": 50,
-            "defence": 0,
-            "picture": "img/RuneScimitar.png"
+      "attack": 50,
+      "defence": 0,
+      "picture": "img/RuneScimitar.png"
 		}]],
 		"remove_points" :[[1,2]]
 	},{
@@ -79,7 +79,7 @@
 			"Thank you so much! I think my sons saw the cat last. They'll be out in the market place."
 		],
 		"been_here_not_visited_dialog" : [
-			[["Take your time."],["You know where my cat is? WHY AREN'T YOU HEADING THERE RIGHT NOW BHJGVRTBHJRT"]]
+			[["Take your time."],["You know where my cat is? WHY AREN'T YOU HEADING THERE RIGHT NOW?!?!?!?!"]]
 		],
 		"been_here_not_completed_dialog" : [
 			[["Those little brats! Find out what they know!"],["You should never ever ever get this dialogue prompt."]]
