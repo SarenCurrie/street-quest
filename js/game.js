@@ -13,7 +13,11 @@ var INTERACTION_RADIUS = 40;
 var MODE_NOGOALS = 0;
 var MODE_DISTANCE = 1;
 // gameplay mode the game currently uses
-var mode = MODE_NOGOALS;
+var mode = {
+	mode: -1,
+	init: function(playerLocation) {},
+	update: function(playerLocation) {}
+};
 
 function initMap() {
 	if (!navigator.geolocation){
@@ -60,39 +64,18 @@ function initMap() {
 			locationUpdated(latLngToBrowserLocation(location));
 		});
 
-		if (mode == MODE_DISTANCE) {
-			function loadJSON(callback) {
-
-				var xobj = new XMLHttpRequest();
-				xobj.overrideMimeType("application/json");
-				xobj.open('GET', './js/quests.json', true); // Replace 'my_data' with the path to your file
-				xobj.onreadystatechange = function () {
-					if (xobj.readyState == 4 && xobj.status == "200") {
-						// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-						callback(xobj.responseText);
-					}
-				};
-				xobj.send(null);
-			}
-
-			loadJSON(function(response) {
-				// Parse JSON string into object
-				var questLog = JSON.parse(response);
-				spawnQuestPoint({lat: position.coords.latitude, lng: position.coords.longitude}, 'Quest Start', questLog[0].action[0].icon, -100, 100, function(err, marker) {
-					if (err) {
-						console.log(err);
-						return;
-					}
-					marker.addListener('click', function() {
-						if (questInRange(playerCircle, marker)) {
-							checkPosition(questLog, marker);
-						}
-					});
-				});
-			});
+		// TODO: add way to switch modes on startup
+		mode.mode = MODE_DISTANCE;
+		switch(mode.mode) {
+			case MODE_DISTANCE:
+				mode.init = mode_distance_init;
+				mode.update = mode_distance_update;
+				break;
 		}
 
+		var playerLocation = browserLocationToLatLng(position);
 		ui.init();
+		mode.init(playerLocation);
 
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
 		ui.updatePlayerStats(getPlayerData());
@@ -154,6 +137,7 @@ function browserLocationToLatLng(location) {
  */
 function locationUpdated(newLocation) {
 	var position = browserLocationToLatLng(newLocation);
+	mode.update(position);
 	playerMarker.setPosition(position);
 	playerCircle.setCenter(position);
 	playerCircle.setRadius(INTERACTION_RADIUS);
@@ -186,15 +170,3 @@ function trackNewLocation(position) {
 	ui.updatePlayerStats(player);
 }
 
-function questInRange(circle,questpoint) {
-	google.maps.Circle.prototype.contains = function(latLng) {
-		return google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= INTERACTION_RADIUS;
-	};
-
-	if ( ! circle.contains(questpoint.getPosition())){
-		ui.makeDialog("Too far away!",["You're too far away to interact with that questpoint."]);
-		return false;
-	} else {
-		return true;
-	}
-}
