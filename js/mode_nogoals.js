@@ -19,7 +19,6 @@ var AMOUNT_OF_LAZY_POINTS = 1;
 
 var spawned_points = {};
 var visible_points = 0;
-var collected_count = 0;
 var next_item_index = 0;
 var lazy_timeout = null;
 
@@ -65,7 +64,9 @@ function remove_point(point) {
  * @param point Point to be collected.
  */
 function collect_point(point) {
-	collected_count++;
+	getPlayerData().gold++;
+	getPlayerData().save();
+	ui.updatePlayerStats(getPlayerData());
 	remove_point(point);
 
 	// Start a timeout after which we spawn new points close to the player.
