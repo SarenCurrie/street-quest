@@ -33,6 +33,7 @@ function initMap() {
 			center: {lat: position.coords.latitude, lng: position.coords.longitude},
 			zoom: 17,
 			disableDefaultUI: true,
+			disableDoubleClickZoom: true,
 			styles: [{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"labels","stylers":[{"visibility":"off"}]}]
 		};
 
