@@ -31,10 +31,10 @@ function initMap() {
 		geocoder = new google.maps.Geocoder;
 
 		playerCircle = new google.maps.Circle({
-			strokeColor: '#0055EE',
+			strokeColor: '#43A047',
 			strokeOpacity: 0.7,
 			strokeWeight: 2,
-			fillColor: '#0055EE',
+			fillColor: '#43A047',
 			fillOpacity: 0.25,
 			map: map,
 			center: {lat: position.coords.latitude, lng: position.coords.longitude},
