@@ -65,8 +65,12 @@ function initMap() {
 		});
 
 		// TODO: add way to switch modes on startup
-		mode.mode = MODE_DISTANCE;
+		mode.mode = MODE_NOGOALS;
 		switch(mode.mode) {
+			case MODE_NOGOALS:
+				mode.init = mode_nogoals_init;
+				mode.update = mode_nogoals_update;
+				break;
 			case MODE_DISTANCE:
 				mode.init = mode_distance_init;
 				mode.update = mode_distance_update;
