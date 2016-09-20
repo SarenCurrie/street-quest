@@ -137,6 +137,13 @@ function browserLocationToLatLng(location) {
 }
 
 /**
+ * Returns the current player position.
+ */
+function getPlayerPosition() {
+	return {lat: playerMarker.getPosition().lat(), lng: playerMarker.getPosition().lng(), accuracy: playerCircle.getRadius()};
+}
+
+/**
  * Callback that gets invoked whenever the player's position has changed.
  * @param newLocation The new location of the player.
  */

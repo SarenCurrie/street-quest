@@ -1,6 +1,7 @@
 var ITEM_RADIUS = 5;
 var MINIMUM_DISTANCE_AWAY_FROM_PLAYER = 30;
-// How far away points should spawn at a maximum.
+var MAXIMUM_DISTANCE_AWAY_FROM_PLAYER = 50;
+// After this threshold, points get removed again.
 var MAXIMUM_POINT_DISTANCE = 100;
 // How many points can be displayed at the same time.
 var MAXIMUM_VISIBLE_POINTS = 20;
@@ -8,20 +9,25 @@ var MAXIMUM_VISIBLE_POINTS = 20;
 // for spawned points to make them clickable
 // at all times.
 var ZINDEX_POINT = 2000;
+// After this threshold, we spawn new points close
+// to the player. This allows players to not move
+// at all and still collect a few points.
+var SPAWN_CLOSE_POINTS_AFTER_TIMEOUT_SECS = 120;
 
 var spawned_points = {};
 var visible_points = 0;
 var collected_count = 0;
 var next_item_index = 0;
+var lazy_timeout = null;
 
 function mode_nogoals_init(playerLocation) {
-	mode_nogoals_update(playerLocation);
+	spawn_close_points();
 }
 
 function mode_nogoals_update(playerLocation) {
 	remove_outdated_points(playerLocation);
 	for (var i=visible_points; i < MAXIMUM_VISIBLE_POINTS; i++) {
-		spawn_random_point(playerLocation);
+		spawn_random_point(MINIMUM_DISTANCE_AWAY_FROM_PLAYER, MAXIMUM_DISTANCE_AWAY_FROM_PLAYER, playerLocation);
 	}
 }
 
@@ -41,6 +47,10 @@ function remove_outdated_points(playerLocation) {
 	}
 }
 
+/**
+ * Removes a point from the map.
+ * @param point The point to remove.
+ */
 function remove_point(point) {
 	point.map_point.setMap(null);
 	delete spawned_points[point.index];
@@ -48,12 +58,38 @@ function remove_point(point) {
 }
 
 /**
+ * Marks a point as collected.
+ * @param point Point to be collected.
+ */
+function collect_point(point) {
+	collected_count++;
+	remove_point(point);
+
+	// Start a timeout after which we spawn new points close to the player.
+	// So players can still play the game without moving at all, but
+	// get much fewer points.
+	clearTimeout(lazy_timeout);
+	lazy_timeout = setTimeout(spawn_close_points, SPAWN_CLOSE_POINTS_AFTER_TIMEOUT_SECS * 1000);
+}
+
+/**
+ * Spawns a few points close to the player.
+ */
+function spawn_close_points() {
+	for (var i=0; i < 10; i++) {
+		spawn_random_point(0, 20, getPlayerPosition());
+	}
+}
+
+/**
  * Spawns a new random point close to the player.
+ * @param minimumDistanceAway Minimum distance between player and spawned points.
+ * @param maximumDistanceAway Maximum distance between player and spawned points.
  * @param playerLocation The location of the player.
  */
-function spawn_random_point(playerLocation) {
-	var dNorth = MINIMUM_DISTANCE_AWAY_FROM_PLAYER + Math.random() * 30;
-	var dEast = MINIMUM_DISTANCE_AWAY_FROM_PLAYER + Math.random() * 30;
+function spawn_random_point(minimumDistanceAway, maximumDistanceAway, playerLocation) {
+	var dNorth = minimumDistanceAway + Math.random() * maximumDistanceAway;
+	var dEast = minimumDistanceAway + Math.random() * maximumDistanceAway;
 	if (Math.random() > 0.5) {
 		dNorth *= -1;
 	}
@@ -89,9 +125,7 @@ function spawn_random_point(playerLocation) {
 				ui.makeDialog("Too far away!",["You are too far away to collect this."]);
 				return;
 			}
-
-			collected_count++;
-			remove_point(point);
+			collect_point(point);
 		});
 	};
 	addPointListener(point);
@@ -99,6 +133,12 @@ function spawn_random_point(playerLocation) {
 	visible_points++;
 }
 
+/**
+ * Checks if a given point is close enough to the player to collect it.
+ * @param playerCircle The interaction circle of the player.
+ * @param pos The position of the point to check.
+ * @returns {boolean}
+ */
 function pointInRange(playerCircle, pos) {
 	google.maps.Circle.prototype.contains = function(latLng) {
 		var pointPos = {lat: this.getCenter().lat(), lng: this.getCenter().lng()};
