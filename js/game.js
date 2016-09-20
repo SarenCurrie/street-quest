@@ -147,7 +147,7 @@ function locationUpdated(newLocation) {
 	var position = browserLocationToLatLng(newLocation);
 	playerMarker.setPosition(position);
 	playerCircle.setCenter(position);
-	playerCircle.setRadius(position.accuracy);
+	playerCircle.setRadius(40);
 	if (position.accuracy > MAXIMUM_LOCATION_ACCURACY) {
 		// Filter all location updates that have low accuracy.
 		ui.showLowGpsWarning();
