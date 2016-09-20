@@ -20,7 +20,7 @@ function checkPosition(questlog, markerToCheck) {
               var spawnQuestPointTmp = function (i,j) {
                 var icon = quest.action[quest.action[i].create_points[quest.action[i].progress][j]].icon;
                 var title = quest.action[quest.action[i].create_points[quest.action[i].progress][j]].name;
-                spawnQuestPoint(initialMarkerPos, title, icon, -100 + (Math.floor(Math.random() * 6) + 1) * 100, 100 + (Math.floor(Math.random() * 6) + 1 ) * 100, function (err, marker) {
+                spawnQuestPoint(initialMarkerPos, title, icon, -100 + (Math.floor(Math.random() * 6) + 1) * 10, 100 + (Math.floor(Math.random() * 6) + 1 ) * 10, function (err, marker) {
                   if (err) {
                     console.log(err);
                     return;
