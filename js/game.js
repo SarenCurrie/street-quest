@@ -155,7 +155,7 @@ function locationUpdated(newLocation) {
 	playerCircle.setRadius(INTERACTION_RADIUS);
 	if (position.accuracy > MAXIMUM_LOCATION_ACCURACY) {
 		// Filter all location updates that have low accuracy.
-		ui.showLowGpsWarning();
+		ui.showLowGpsWarning(position.accuracy, MAXIMUM_LOCATION_ACCURACY);
 		return;
 	}
 	ui.hideLowGpsWarning();
