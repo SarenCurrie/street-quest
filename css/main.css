@@ -35,6 +35,14 @@ html, body {
     vertical-align: bottom;
 }
 
+#gold_container {
+    position: absolute;
+    bottom: 0;
+    z-index: 1001;
+    vertical-align: bottom;
+    right: 5%
+}
+
 #inventory_container {
     position: absolute;
     left: 5%;
@@ -53,7 +61,7 @@ html, body {
     text-align: center;
     position: absolute;
     z-index: 1001;
-    top: 5%;
+    top: 50%;
     left: 5%;
     width: 90%;
 }

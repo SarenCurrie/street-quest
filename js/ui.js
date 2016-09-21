@@ -36,10 +36,12 @@ var ui = {
         $('#dialog_speaker').text(name);
         $('#dialog_text').text(text[0]);
 
+        var i = 1;
+
         $('#dialog').on('click', function () {
-            if(text[1]) {
-                text.shift();
-                $('#dialog_text').text(text[0]);
+            if(text[i]) {
+                $('#dialog_text').text(text[i]);
+                i++;
             } else {
                 $('#dialog').hide()
                 .off('click');
@@ -76,14 +78,21 @@ var ui = {
     },
 
     updatePlayerStats: function(player) {
-        $("#show_player_stats").html('Player Distance: ' + Math.round(player.traveledDistance) + 'm<br/>Player Gold: ' + player.gold);
+        $("#show_player_stats").html('Player Distance: ' + Math.round(player.traveledDistance));
+        $("#player_gold").text('Gold: ' + player.gold);
     },
 
-    showLowGpsWarning: function () {
+    showLowGpsWarning: function (accuracy, requiredAccuracy) {
+        $("#map").css('visibility', 'hidden');
+        var low_gps_text = "Low GPS accuracy! Gameplay paused.";
+        low_gps_text += " [Accuracy: " + Math.round(accuracy) + "m";
+        low_gps_text += ", Required: " + Math.round(requiredAccuracy) + "m]";
+        $("#low_gps_text").text(low_gps_text);
         $("#low_gps_container").show();
     },
     hideLowGpsWarning: function () {
         $("#low_gps_container").hide();
+        $("#map").css('visibility', 'visible');
     }
 
 }

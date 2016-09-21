@@ -20,6 +20,8 @@
 	<script src="js/map-calculations.js"></script>
 	<script src="js/questManage.js"></script>
 	<script src="js/playerData.js"></script>
+	<script src="js/mode_distance.js"></script>
+	<script src="js/mode_nogoals.js"></script>
 </head>
 <body>
 	<div id="menu_parent">
@@ -29,7 +31,7 @@
 				<li id="close_menu" class="btn btn-secondary list-group-item"><a href="#">Close</a></li>
 				<li id="show_dialog" class="btn btn-secondary list-group-item"><a href="#">Example Dialog</a></li>
 			  	<li id="show_inventory" class="btn btn-secondary list-group-item"><a href="#">Inventory</a></li>
-				<li id="show_player_stats" class="btn btn-secondary list-group-item"><a href="#">Player Distance: 0m<br/>Player Gold: 0</a></li>
+				<li id="show_player_stats" class="btn btn-secondary list-group-item"><a href="#">Player Distance: 0m</a></li>
 				<li id="clear_data" class="btn btn-secondary list-group-item"><a href="#">Clear Data</a></li>
 			</ul>
 		</div>
@@ -37,7 +39,7 @@
 	<div id="low_gps_container" style="display:none">
 		<div id="low_gps" class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Low GPS accuracy! Tracking disabled..</h3>
+				<h3 class="panel-title" id="low_gps_text">Low GPS accuracy! Gameplay paused.</h3>
 			</div>
 		</div>
 	</div>
@@ -63,6 +65,15 @@
 				</ul>
 			</div>
 			<div class="panel-footer">Close</div>
+		</div>
+	</div>
+	<div id="gold_container">
+		<div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 id="player_gold" class="panel-title">Gold: 0</h3>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div id="map"></div>
