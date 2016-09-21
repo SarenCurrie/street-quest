@@ -80,11 +80,17 @@ var ui = {
         $("#player_gold").text('Gold: ' + player.gold);
     },
 
-    showLowGpsWarning: function () {
+    showLowGpsWarning: function (accuracy, requiredAccuracy) {
+        $("#map").css('visibility', 'hidden');
+        var low_gps_text = "Low GPS accuracy! Gameplay paused.";
+        low_gps_text += " [Accuracy: " + Math.round(accuracy) + "m";
+        low_gps_text += ", Required: " + Math.round(requiredAccuracy) + "m]";
+        $("#low_gps_text").text(low_gps_text);
         $("#low_gps_container").show();
     },
     hideLowGpsWarning: function () {
         $("#low_gps_container").hide();
+        $("#map").css('visibility', 'visible');
     }
 
 }
