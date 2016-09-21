@@ -5,7 +5,6 @@ var playerCircle;
 // If the location accuracy is higher than this (in meters),
 // tracking will be disabled.
 var MAXIMUM_LOCATION_ACCURACY = 20;
-var markersPos = [];
 // Players should be able to interact with quest points and
 // collect items even if they are not exactly next to it
 // to avoid having to enter buildings etc.
@@ -81,7 +80,7 @@ function initMap() {
 
 		var playerLocation = browserLocationToLatLng(position);
 		ui.init();
-		mode.init(playerLocation, markersPos, map);
+		mode.init(playerLocation);
 
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
 		ui.updatePlayerStats(getPlayerData());

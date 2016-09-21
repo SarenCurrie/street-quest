@@ -1,4 +1,6 @@
-function mode_distance_init(playerLocation, markersPos, map) {
+var markersPos = [];
+
+function mode_distance_init(playerLocation) {
 	loadJSON(function(response) {
 		// Parse JSON string into object
 		var questLog = JSON.parse(response);
