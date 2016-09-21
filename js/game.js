@@ -5,9 +5,6 @@ var playerCircle;
 // If the location accuracy is higher than this (in meters),
 // tracking will be disabled.
 var MAXIMUM_LOCATION_ACCURACY = 20;
-// Quest can be interacted with if the player is kinda close
-// to the quest point.
-var QUEST_IN_RANGE_RADIUS = 30;
 var markersPos = [];
 // Players should be able to interact with quest points and
 // collect items even if they are not exactly next to it
