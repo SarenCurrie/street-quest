@@ -140,7 +140,7 @@ function browserLocationToLatLng(location) {
  * Returns the current player position.
  */
 function getPlayerPosition() {
-	return {lat: playerMarker.getPosition().lat(), lng: playerMarker.getPosition().lng(), accuracy: playerCircle.getRadius()};
+	return {lat: playerMarker.getPosition().lat(), lng: playerMarker.getPosition().lng()};
 }
 
 /**
