@@ -9,6 +9,15 @@ var MAXIMUM_LOCATION_ACCURACY = 20;
 // collect items even if they are not exactly next to it
 // to avoid having to enter buildings etc.
 var INTERACTION_RADIUS = 40;
+// support game modes
+var MODE_NOGOALS = 0;
+var MODE_DISTANCE = 1;
+// gameplay mode the game currently uses
+var mode = {
+	mode: -1,
+	init: function(playerLocation) {},
+	update: function(playerLocation) {}
+};
 
 function initMap() {
 	if (!navigator.geolocation){
@@ -24,6 +33,7 @@ function initMap() {
 			center: {lat: position.coords.latitude, lng: position.coords.longitude},
 			zoom: 17,
 			disableDefaultUI: true,
+			disableDoubleClickZoom: true,
 			styles: [{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"labels","stylers":[{"visibility":"off"}]}]
 		};
 
@@ -55,36 +65,22 @@ function initMap() {
 			locationUpdated(latLngToBrowserLocation(location));
 		});
 
-		function loadJSON(callback) {
-
-			var xobj = new XMLHttpRequest();
-			xobj.overrideMimeType("application/json");
-			xobj.open('GET', './js/quests.json', true); // Replace 'my_data' with the path to your file
-			xobj.onreadystatechange = function () {
-				if (xobj.readyState == 4 && xobj.status == "200") {
-					// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-					callback(xobj.responseText);
-				}
-			};
-			xobj.send(null);
+		// TODO: add way to switch modes on startup
+		mode.mode = MODE_NOGOALS;
+		switch(mode.mode) {
+			case MODE_NOGOALS:
+				mode.init = mode_nogoals_init;
+				mode.update = mode_nogoals_update;
+				break;
+			case MODE_DISTANCE:
+				mode.init = mode_distance_init;
+				mode.update = mode_distance_update;
+				break;
 		}
 
-		loadJSON(function(response) {
-			// Parse JSON string into object
-			var questLog = JSON.parse(response);
-			spawnQuestPoint({lat: position.coords.latitude, lng: position.coords.longitude}, 'Quest Start', questLog[0].action[0].icon, -100, 100, function(err, marker) {
-				if (err) {
-					console.log(err);
-					return;
-				}
-				marker.addListener('click', function() {
-					if (questInRange(playerCircle, marker)) {
-						checkPosition(questLog, marker);
-					}
-				});
-			});
-		});
+		var playerLocation = browserLocationToLatLng(position);
 		ui.init();
+		mode.init(playerLocation);
 
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
 		ui.updatePlayerStats(getPlayerData());
@@ -141,11 +137,19 @@ function browserLocationToLatLng(location) {
 }
 
 /**
+ * Returns the current player position.
+ */
+function getPlayerPosition() {
+	return {lat: playerMarker.getPosition().lat(), lng: playerMarker.getPosition().lng(), accuracy: playerCircle.getRadius()};
+}
+
+/**
  * Callback that gets invoked whenever the player's position has changed.
  * @param newLocation The new location of the player.
  */
 function locationUpdated(newLocation) {
 	var position = browserLocationToLatLng(newLocation);
+	mode.update(position);
 	playerMarker.setPosition(position);
 	playerCircle.setCenter(position);
 	playerCircle.setRadius(INTERACTION_RADIUS);
@@ -178,15 +182,3 @@ function trackNewLocation(position) {
 	ui.updatePlayerStats(player);
 }
 
-function questInRange(circle,questpoint) {
-	google.maps.Circle.prototype.contains = function(latLng) {
-		return google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= INTERACTION_RADIUS;
-	};
-
-	if ( ! circle.contains(questpoint.getPosition())){
-		ui.makeDialog("Too far away!",["You're too far away to interact with that questpoint."]);
-		return false;
-	} else {
-		return true;
-	}
-}
