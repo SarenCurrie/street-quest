@@ -4,7 +4,11 @@ var playerMarker;
 var playerCircle;
 // If the location accuracy is higher than this (in meters),
 // tracking will be disabled.
-var MAXIMUM_LOCATION_ACCURACY = 20;
+var MAXIMUM_LOCATION_ACCURACY = 200;
+// Quest can be interacted with if the player is kinda close
+// to the quest point.
+var QUEST_IN_RANGE_RADIUS = 30;
+var markersPos = [];
 // Players should be able to interact with quest points and
 // collect items even if they are not exactly next to it
 // to avoid having to enter buildings etc.
@@ -66,7 +70,7 @@ function initMap() {
 		});
 
 		// TODO: add way to switch modes on startup
-		mode.mode = MODE_NOGOALS;
+		mode.mode = MODE_DISTANCE;
 		switch(mode.mode) {
 			case MODE_NOGOALS:
 				mode.init = mode_nogoals_init;
@@ -80,7 +84,7 @@ function initMap() {
 
 		var playerLocation = browserLocationToLatLng(position);
 		ui.init();
-		mode.init(playerLocation);
+		mode.init(playerLocation, markersPos, map);
 
 		getPlayerData().lastLocation = browserLocationToLatLng(position);
 		ui.updatePlayerStats(getPlayerData());
@@ -181,4 +185,3 @@ function trackNewLocation(position) {
 	player.save();
 	ui.updatePlayerStats(player);
 }
-

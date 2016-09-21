@@ -1,16 +1,23 @@
-function mode_distance_init(playerLocation) {
+function mode_distance_init(playerLocation, markersPos, map) {
 	loadJSON(function(response) {
 		// Parse JSON string into object
 		var questLog = JSON.parse(response);
-		spawnQuestPoint(playerLocation, 'Quest Start', questLog[0].action[0].icon, -100, 100, function(err, marker) {
-			if (err) {
-				console.log(err);
-				return;
-			}
-			marker.addListener('click', function() {
-				if (questInRange(playerCircle, marker)) {
-					checkPosition(questLog, marker);
+		questLog.forEach(function(e,i){
+			spawnQuestPoint(playerLocation, 'Quest Start', questLog[i].action[0].icon, -100*(Math.floor(Math.random() * 6) + 1), 100*(Math.floor(Math.random() * 6) + 1), function(err, marker) {
+				if (err) {
+					console.log(err);
+					return;
 				}
+				markersPos.push({
+					marker: marker,
+					lat: marker.getPosition().lat(),
+					lng: marker.getPosition().lng()
+				});
+				marker.addListener('click', function() {
+					if (questInRange(playerCircle, marker)) {
+						checkPosition(questLog, marker, markersPos, map);
+					}
+				});
 			});
 		});
 	});
@@ -24,7 +31,7 @@ function mode_distance_update(playerLocation) {
 function loadJSON(callback) {
 	var xobj = new XMLHttpRequest();
 	xobj.overrideMimeType("application/json");
-	xobj.open('GET', './js/quests.json', true); // Replace 'my_data' with the path to your file
+	xobj.open('GET', './js/quests.json', true);
 	xobj.onreadystatechange = function () {
 		if (xobj.readyState == 4 && xobj.status == "200") {
 			// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode

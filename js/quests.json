@@ -1,6 +1,6 @@
 [{
 	"questName": "Albert Park Adventure",
-	"active": true,
+	"active": false,
 	"action": [{
 		"name" : "A struggling rower",
 		"npcName": "Deen",
@@ -111,7 +111,7 @@
 			[["Well, one thing's for sure, you standing around here isn't helping remind us."]]
 		],
 		"completion_dialog": [
-			["Oh, I remember now, yeah! We hid them in the treehouse! Can't believe I forgot."],["Oh, yeah. Treehouse is that way. Kinda important."],["For another 100, we can hide the cat somewhere else."]
+			["You defintely should not get this dialogue."],["Oh, I remember now, yeah! We hid them in the treehouse! Can't believe I forgot. Treehouse is that way."],["For another 100, we can hide the cat somewhere else."]
 		]
 	},{
 		"name": "A pile of money",
