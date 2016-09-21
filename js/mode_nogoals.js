@@ -84,9 +84,12 @@ function spawn_random_point(playerLocation) {
 
 	var addPointListener = function(point) {
 		point.map_point.addListener('click', function () {
-			// TODO: we have to restrict which points can
-			// be collected. The player must be kinda close
-			// to the point in order to collect it.
+			var pointPos = {lat: point.map_point.getCenter().lat(), lng: point.map_point.getCenter().lng()};
+			if (!pointInRange(playerCircle, pointPos)) {
+				ui.makeDialog("Too far away!",["You are too far away to collect this."]);
+				return;
+			}
+
 			collected_count++;
 			remove_point(point);
 		});
@@ -94,4 +97,12 @@ function spawn_random_point(playerLocation) {
 	addPointListener(point);
 	spawned_points[point.index] = point;
 	visible_points++;
+}
+
+function pointInRange(playerCircle, pos) {
+	google.maps.Circle.prototype.contains = function(latLng) {
+		var pointPos = {lat: this.getCenter().lat(), lng: this.getCenter().lng()};
+		return distanceBetween(pointPos, latLng) <= INTERACTION_RADIUS;
+	};
+	return playerCircle.contains(pos);
 }
