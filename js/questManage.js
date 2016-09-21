@@ -1,6 +1,5 @@
 function checkPosition(questlog, markerToCheck, markersPos, map) {
   var hit = false;
-  console.log('Doing magic! (^ . ^) ~ ~ * . *');
   questlog.forEach(function(quest){
     var arrayLength = quest.positions.length;
     for (var i = 0; i < arrayLength; i++){
@@ -62,12 +61,14 @@ function checkPosition(questlog, markerToCheck, markersPos, map) {
           if (quest.action[quest.action[i].to_visit[quest.action[i].progress][j]].visited == false){
             console.log('This text shows if a location has not been visited.')
             ui.makeDialog(quest.action[i].npcName, quest.action[i].been_here_not_visited_dialog[quest.action[i].progress][j]);
+            hit = true;
             return;
             // now check if we've been there, but havan't finished the task they gave
           }
           if (quest.action[quest.action[i].to_visit[quest.action[i].progress][j]].completed == false && quest.action[i].been_here_not_completed_dialog) {
             console.log('This text shows if a location has not had the task completed.');
             ui.makeDialog(quest.action[i].npcName, quest.action[i].been_here_not_completed_dialog[quest.action[i].progress][j]);
+            hit = true;
             return;
           }
         }
@@ -79,6 +80,10 @@ function checkPosition(questlog, markerToCheck, markersPos, map) {
         // if there is no more places to go, we've completed this segement
         if (quest.action[i].progress >= quest.action[i].to_visit.length){
           quest.action[i].completed = true;
+        }
+        else {
+          // there is more to do, we then queue up the next tidbit
+          checkPosition(questlog, markerToCheck, markersPos, map); // ???
         }
 
         // raise the dead! hopefully we can bring them back ;o
@@ -107,18 +112,17 @@ function checkPosition(questlog, markerToCheck, markersPos, map) {
         }
       }
       hit = true;
-      return;
     }
   }});
   // you clicked a point that isnt associated with a quest, oh boy, allocate and call this again
-  console.log('Unasscoiated! Uh oh!');
   if (!hit){
+      console.log('Unasscoiated! Uh oh!');
     questlog.some(function(quest){
       if  (quest.active == false){
         console.log('Found inactive quest!');
         quest.active = true;
         quest.positions[0] = markerToCheck;
-        checkPosition(questlog, markerToCheck);
+        checkPosition(questlog, markerToCheck, markersPos, map);
         // delete all the other markers from the map (maybe)
         // this should only occur if all the markers are show anyway
         console.log('Removing other quest points.');
