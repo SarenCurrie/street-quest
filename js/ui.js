@@ -36,10 +36,12 @@ var ui = {
         $('#dialog_speaker').text(name);
         $('#dialog_text').text(text[0]);
 
+        var i = 1;
+
         $('#dialog').on('click', function () {
-            if(text[1]) {
-                text.shift();
-                $('#dialog_text').text(text[0]);
+            if(text[i]) {
+                $('#dialog_text').text(text[i]);
+                i++;
             } else {
                 $('#dialog').hide()
                 .off('click');
