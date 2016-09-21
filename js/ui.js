@@ -76,7 +76,8 @@ var ui = {
     },
 
     updatePlayerStats: function(player) {
-        $("#show_player_stats").html('Player Distance: ' + Math.round(player.traveledDistance) + 'm<br/>Player Gold: ' + player.gold);
+        $("#show_player_stats").html('Player Distance: ' + Math.round(player.traveledDistance));
+        $("#player_gold").text('Gold: ' + player.gold);
     },
 
     showLowGpsWarning: function () {
