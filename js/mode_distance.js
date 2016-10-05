@@ -5,7 +5,9 @@ function mode_distance_init(playerLocation) {
 		// Parse JSON string into object
 		var questLog = JSON.parse(response);
 		questLog.forEach(function(e,i){
-			spawnQuestPoint(playerLocation, 'Quest Start', questLog[i].action[0].icon, -100*(Math.floor(Math.random() * 6) + 1), 100*(Math.floor(Math.random() * 6) + 1), function(err, marker) {
+			var x = Math.random() < 0.5 ? -1 : 1;
+			var y = Math.random() < 0.5 ? -1 : 1;
+			spawnQuestPoint(playerLocation, 'Quest Start', questLog[i].action[0].icon, x*10*(Math.floor(Math.random() * 24) + 1), y*10*(Math.floor(Math.random() * 24) + 1), function(err, marker) {
 				if (err) {
 					console.log(err);
 					return;
