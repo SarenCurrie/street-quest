@@ -23,6 +23,11 @@ var mode = {
 	update: function(playerLocation) {}
 };
 
+
+
+/**
+ * Called by Google Maps after the map has been loaded.
+ */
 function initMap() {
 	if (!navigator.geolocation){
 		output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
@@ -36,8 +41,12 @@ function initMap() {
 		var mapOptions = {
 			center: {lat: position.coords.latitude, lng: position.coords.longitude},
 			zoom: 17,
+			// Hide zoom controls.
 			disableDefaultUI: true,
+			// Disable double click zoom to be able to quickly collect many coins without
+			// triggering the zoom.
 			disableDoubleClickZoom: true,
+			// Hide noisy elements like POI, bus stops, etc.
 			styles: [{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"labels","stylers":[{"visibility":"off"}]}]
 		};
 
