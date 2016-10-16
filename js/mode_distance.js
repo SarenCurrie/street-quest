@@ -1,5 +1,9 @@
 var markersPos = [];
 
+/**
+ * Initializes the gameplay mode.
+ * @param playerLocation The player's location.
+ */
 function mode_distance_init(playerLocation) {
 	loadQuests(function(response) {
 		// Parse JSON string into object
@@ -27,11 +31,20 @@ function mode_distance_init(playerLocation) {
 	});
 }
 
+/**
+ * Updates the gameplay elements according to the player's current location.
+ * This gets called whenever the player's location changes.
+ * @param playerLocation The player's location.
+ */
 function mode_distance_update(playerLocation) {
 	// Currently, we don't do anything special
 	// when the location gets updated.
 }
 
+/**
+ * Loads all quests from a file resource.
+ * @param callback Callback that gets invoked with the quest json string.
+ */
 function loadQuests(callback) {
 	var xobj = new XMLHttpRequest();
 	xobj.overrideMimeType("application/json");
@@ -45,6 +58,12 @@ function loadQuests(callback) {
 	xobj.send(null);
 }
 
+/**
+ * Checks if a quest point is inside the interaction radius of the player.
+ * @param circle The player's circle.
+ * @param questpoint The quest point to check.
+ * @returns {boolean}
+ */
 function questInRange(circle,questpoint) {
 	google.maps.Circle.prototype.contains = function(latLng) {
 		return google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= INTERACTION_RADIUS;
