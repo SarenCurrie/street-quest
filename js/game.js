@@ -3,7 +3,7 @@ var geocoder;
 var playerMarker;
 var playerCircle;
 // If the location accuracy is higher than this (in meters),
-// tracking will be disabled.
+// all gameplay elements and location tracking will be disabled.
 var MAXIMUM_LOCATION_ACCURACY = 20;
 // Do not track a location update if the traveled distance
 // is less than this amount of meters. These just come from
