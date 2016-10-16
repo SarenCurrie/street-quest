@@ -1,7 +1,7 @@
 var markersPos = [];
 
 function mode_distance_init(playerLocation) {
-	loadJSON(function(response) {
+	loadQuests(function(response) {
 		// Parse JSON string into object
 		var questLog = JSON.parse(response);
 		questLog.forEach(function(e,i){
@@ -32,7 +32,7 @@ function mode_distance_update(playerLocation) {
 	// when the location gets updated.
 }
 
-function loadJSON(callback) {
+function loadQuests(callback) {
 	var xobj = new XMLHttpRequest();
 	xobj.overrideMimeType("application/json");
 	xobj.open('GET', './js/quests.json', true);
