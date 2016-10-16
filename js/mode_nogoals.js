@@ -1,26 +1,43 @@
+// How big the radius of items are displayed.
 var ITEM_RADIUS = 5;
+
+// How far away from the player points get spawn.
 var MINIMUM_DISTANCE_AWAY_FROM_PLAYER = 30;
 var MAXIMUM_DISTANCE_AWAY_FROM_PLAYER = 50;
-// After this threshold, points get removed again.
+
+// After being away from the player more than this
+// threshold (in meters), points get removed again.
 var MAXIMUM_POINT_DISTANCE = 100;
-// How many points can be displayed at the same time.
+
+// How many points will be displayed at the same time.
 var MAXIMUM_VISIBLE_POINTS = 20;
+
 // We have to make sure to use a high zIndex
 // for spawned points to make them clickable
 // at all times.
 var ZINDEX_POINT = 2000;
-// After this threshold, we spawn new points close
-// to the player. This allows players to not move
+
+// After this threshold (in seconds), we spawn new points
+// close to the player. This allows players to not move
 // at all and still collect a few points.
 var SPAWN_CLOSE_POINTS_AFTER_TIMEOUT_SECS = 20;
+
 // How many points to spawn when the player does not
 // collect points.
 var AMOUNT_OF_LAZY_POINTS = 1;
 
+// Keeps track of all spawned points.
 var spawned_points = {};
-var visible_points = 0;
+// Makes sure we use unique values as keys in spawned_points.
 var next_item_index = 0;
+
+// Amount of currently visible points.
+var visible_points = 0;
+
+// Timeout reference for spawning lazy points.
 var lazy_timeout = null;
+
+
 
 /**
  * Initializes the gameplay mode.

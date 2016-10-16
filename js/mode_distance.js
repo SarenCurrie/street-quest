@@ -1,4 +1,7 @@
+// Stores all created markers.
 var markersPos = [];
+
+
 
 /**
  * Initializes the gameplay mode.
