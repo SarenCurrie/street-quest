@@ -4,7 +4,9 @@ var playerMarker;
 var playerCircle;
 // If the location accuracy is higher than this (in meters),
 // all gameplay elements and location tracking will be disabled.
-var MAXIMUM_LOCATION_ACCURACY = 20;
+// This is the lowest this can be to reliably work on most phones.
+var MAXIMUM_LOCATION_ACCURACY = 70;
+
 // Do not track a location update if the traveled distance
 // is less than this amount of meters. These just come from
 // the GPS jumping around a bit.
