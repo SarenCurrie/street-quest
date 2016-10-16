@@ -22,10 +22,19 @@ var visible_points = 0;
 var next_item_index = 0;
 var lazy_timeout = null;
 
+/**
+ * Initializes the gameplay mode.
+ * @param playerLocation The player's location.
+ */
 function mode_nogoals_init(playerLocation) {
 	spawn_close_points();
 }
 
+/**
+ * Updates the gameplay elements according to the player's current location.
+ * This gets called whenever the player's location changes.
+ * @param playerLocation The player's location.
+ */
 function mode_nogoals_update(playerLocation) {
 	remove_outdated_points(playerLocation);
 	for (var i=visible_points; i < MAXIMUM_VISIBLE_POINTS; i++) {
