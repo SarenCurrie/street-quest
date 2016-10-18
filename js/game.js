@@ -112,12 +112,12 @@ function initMap() {
  * @param position The position from where the offset is calculated.
  * @param title The title to give to the marker.
  * @param icon The icon to display as marker.
- * @param dx Offset in North direction.
- * @param dy Offset in South direction.
+ * @param north Offset in North direction.
+ * @param east Offset in East direction.
  * @param callback Callback that gets executed after the position was calculated.
  */
-function spawnQuestPoint(position, title, icon, dx, dy, callback) {
-	var pos = addDistanceToPosition(position, dx, dy);
+function spawnQuestPoint(position, title, icon, north, east, callback) {
+	var pos = addDistanceToPosition(position, north, east);
 	adjustPosition(pos, geocoder, function(err, newPosition) {
 		if (err) {
 			callback(err, null);
