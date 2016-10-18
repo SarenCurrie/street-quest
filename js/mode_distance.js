@@ -29,6 +29,7 @@ function mode_distance_init(playerLocation) {
 						checkPosition(questLog, marker, markersPos, map);
 					}
 				});
+				e.positions[0] = marker;
 			});
 		});
 	});
