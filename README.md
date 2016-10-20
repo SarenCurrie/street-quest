@@ -14,13 +14,15 @@ To switch between the two gamemodes, set `mode.mode` inside `game.js`.
 #### Saren Currie
 * UI
 * Sever setup
+* Pair Programmer
 
 #### Nicholas Schneider
 * Point Spawning
 * Coin mode
 
 #### Frano Stanisic
-* Quests handling
+* Quest content
+* Quest handling
 
 #### Yubo Wu
 * UI
@@ -28,3 +30,4 @@ To switch between the two gamemodes, set `mode.mode` inside `game.js`.
 
 #### Summary
 We all felt like we did similar amounts of work.
+This was a vauge summary of what we did and it got to a point where not everyone did code as it was not necessary 
