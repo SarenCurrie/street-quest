@@ -116,9 +116,9 @@ function checkPosition(questlog, markerToCheck, markersPos, map) {
   // you clicked a point that isnt associated with a quest, oh boy, allocate and call this again
   if (!hit){
       console.log('Unasscoiated! Uh oh!');
-    questlog.some(function(quest){
-      if  (quest.active == false){
-        console.log('Found inactive quest!');
+    questlog.forEach(function(quest){
+      if (markerToCheck.getPosition().lng() == quest.startingPoint.getPosition().lng()
+          && markerToCheck.getPosition().lat() == quest.startingPoint.getPosition().lat()) {
         quest.active = true;
         quest.positions[0] = markerToCheck;
         checkPosition(questlog, markerToCheck, markersPos, map);

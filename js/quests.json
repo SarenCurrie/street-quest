@@ -1,6 +1,7 @@
 [{
 	"questName": "Albert Park Adventure",
 	"active": false,
+	"startingPoint": null,
 	"action": [{
 		"name" : "A struggling rower",
 		"npcName": "Deen",
@@ -63,6 +64,7 @@
 },{
 	"questName": "Gertrude's Cat",
 	"active": false,
+	"startingPoint": null,
 	"action": [{
 		"name" : "Gertrude's house",
 		"npcName": "Gertrude",
